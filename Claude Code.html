@@ -1,0 +1,2687 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Путеводитель по Гартеневеру</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1209;
+    --parchment: #f2e8d5;
+    --parchment-dark: #e8d9bc;
+    --parchment-deep: #d4c49a;
+    --crimson: #8b1a1a;
+    --gold: #c9a84c;
+    --gold-light: #e8c96a;
+    --midnight: #0d0a14;
+    --purple-deep: #2d1b4e;
+    --purple-mid: #4a2d7a;
+    --silver: #9ba8b4;
+    --stone: #4a4035;
+    --shadow: rgba(10,5,0,0.6);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--midnight);
+    color: var(--parchment);
+    font-family: 'Crimson Text', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ===== SCROLLBAR ===== */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--midnight); }
+  ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 4px; }
+
+  /* ===== HERO ===== */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 60%, #1a0a2e 0%, var(--midnight) 70%);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(139,26,26,0.15) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(74,45,122,0.2) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(201,168,76,0.05) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .stars {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle var(--d, 3s) infinite var(--delay, 0s);
+    opacity: var(--opacity, 0.6);
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: var(--opacity, 0.6); transform: scale(1); }
+    50% { opacity: 0.1; transform: scale(0.5); }
+  }
+
+  .hero-ornament {
+    font-size: 2rem;
+    color: var(--gold);
+    letter-spacing: 0.5em;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 1s ease both;
+    opacity: 0.7;
+  }
+
+  .hero h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.5rem, 7vw, 6rem);
+    font-weight: 900;
+    color: var(--gold-light);
+    text-shadow: 0 0 60px rgba(201,168,76,0.4), 0 2px 4px rgba(0,0,0,0.8);
+    letter-spacing: 0.05em;
+    line-height: 1.1;
+    animation: fadeUp 1s 0.2s ease both;
+    opacity: 0;
+  }
+
+  .hero-sub {
+    font-family: 'IM Fell English', serif;
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    color: var(--parchment-deep);
+    margin-top: 1rem;
+    letter-spacing: 0.2em;
+    animation: fadeUp 1s 0.4s ease both;
+    opacity: 0;
+  }
+
+  .hero-divider {
+    width: 300px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 2rem auto;
+    animation: fadeUp 1s 0.5s ease both;
+    opacity: 0;
+  }
+
+  .hero-desc {
+    max-width: 700px;
+    color: var(--silver);
+    font-style: italic;
+    font-size: 1.1rem;
+    animation: fadeUp 1s 0.6s ease both;
+    opacity: 0;
+    padding: 0 2rem;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--gold);
+    opacity: 0.5;
+    animation: bounce 2s infinite;
+    font-size: 1.5rem;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== LAYOUT ===== */
+  .layout {
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* ===== SIDEBAR ===== */
+  .sidebar {
+    width: 280px;
+    flex-shrink: 0;
+    background: linear-gradient(180deg, #0d0a14 0%, #110d1a 100%);
+    border-right: 1px solid rgba(201,168,76,0.2);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 1.5rem 0;
+    z-index: 100;
+  }
+
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); }
+
+  .sidebar-logo {
+    padding: 0 1.5rem 1.5rem;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    margin-bottom: 1rem;
+  }
+
+  .sidebar-logo-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: var(--gold);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+
+  .sidebar-logo-sub {
+    font-size: 0.75rem;
+    color: var(--silver);
+    opacity: 0.6;
+    margin-top: 0.2rem;
+  }
+
+  .nav-section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    color: var(--gold);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 1rem 1.5rem 0.3rem;
+    opacity: 0.6;
+  }
+
+  .nav-item {
+    display: block;
+    padding: 0.4rem 1.5rem;
+    color: var(--parchment-deep);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    cursor: pointer;
+    border-left: 2px solid transparent;
+    font-family: 'Crimson Text', serif;
+  }
+
+  .nav-item:hover {
+    color: var(--gold-light);
+    border-left-color: var(--gold);
+    background: rgba(201,168,76,0.05);
+    padding-left: 2rem;
+  }
+
+  .nav-item.sub {
+    padding-left: 2.5rem;
+    font-size: 0.82rem;
+    color: var(--silver);
+    opacity: 0.8;
+  }
+
+  .nav-item.sub:hover {
+    padding-left: 3rem;
+    opacity: 1;
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  .main {
+    flex: 1;
+    max-width: 900px;
+    padding: 3rem 4rem;
+    background: linear-gradient(180deg, #100d18 0%, #0d0a14 100%);
+  }
+
+  /* ===== SECTIONS ===== */
+  .section {
+    margin-bottom: 5rem;
+    animation: fadeIn 0.5s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .chapter-header {
+    position: relative;
+    margin-bottom: 3rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .chapter-number {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    color: var(--gold);
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 0.5rem;
+  }
+
+  .chapter-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 900;
+    color: var(--gold-light);
+    line-height: 1.1;
+    text-shadow: 0 0 30px rgba(201,168,76,0.2);
+  }
+
+  .chapter-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold), rgba(201,168,76,0.2), transparent);
+  }
+
+  h2.section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin: 2.5rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+
+  h3.subsection-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: var(--gold-light);
+    margin: 2rem 0 0.7rem;
+    opacity: 0.9;
+  }
+
+  h4.sub-subsection {
+    font-family: 'IM Fell English', serif;
+    font-size: 1rem;
+    color: var(--parchment);
+    margin: 1.5rem 0 0.5rem;
+    font-style: italic;
+  }
+
+  p {
+    margin-bottom: 1rem;
+    color: var(--parchment-dark);
+    line-height: 1.8;
+  }
+
+  /* ===== CARDS ===== */
+  .card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 4px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--gold);
+  }
+
+  .card.crimson::before { background: var(--crimson); }
+  .card.purple::before { background: var(--purple-mid); }
+  .card.silver::before { background: var(--silver); }
+
+  .card-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: var(--gold-light);
+    margin-bottom: 0.7rem;
+    font-weight: 600;
+  }
+
+  /* ===== QUOTE ===== */
+  .quote-block {
+    border-left: 3px solid var(--gold);
+    padding: 1.2rem 1.5rem;
+    margin: 2rem 0;
+    background: rgba(201,168,76,0.05);
+    position: relative;
+  }
+
+  .quote-block::before {
+    content: '"';
+    position: absolute;
+    top: -0.5rem;
+    left: 1rem;
+    font-size: 4rem;
+    color: var(--gold);
+    opacity: 0.2;
+    font-family: Georgia, serif;
+    line-height: 1;
+  }
+
+  .quote-text {
+    font-style: italic;
+    color: var(--parchment);
+    font-size: 1.05rem;
+  }
+
+  .quote-attribution {
+    margin-top: 0.7rem;
+    font-size: 0.85rem;
+    color: var(--gold);
+    opacity: 0.8;
+  }
+
+  .quote-attribution::before { content: '— '; }
+
+  /* ===== NOTE/DESCRIPTIVE ===== */
+  .note-block {
+    background: rgba(13,10,20,0.8);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 4px;
+    padding: 1.2rem 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .note-block .note-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+
+  .dm-block {
+    background: rgba(139,26,26,0.08);
+    border: 1px solid rgba(139,26,26,0.25);
+    border-radius: 4px;
+    padding: 1.2rem 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .dm-block .dm-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    color: var(--crimson);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+  }
+
+  /* ===== TABLES ===== */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.92rem;
+  }
+
+  th {
+    background: rgba(201,168,76,0.1);
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    padding: 0.7rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+  }
+
+  td {
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: var(--parchment-dark);
+    vertical-align: top;
+  }
+
+  tr:hover td { background: rgba(201,168,76,0.03); }
+
+  /* ===== BADGE / TAG ===== */
+  .badge {
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
+    border-radius: 2px;
+    font-size: 0.7rem;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+  }
+
+  .badge-gold { background: rgba(201,168,76,0.15); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
+  .badge-crimson { background: rgba(139,26,26,0.15); color: #d47070; border: 1px solid rgba(139,26,26,0.3); }
+  .badge-purple { background: rgba(74,45,122,0.2); color: #9b7fd4; border: 1px solid rgba(74,45,122,0.4); }
+  .badge-silver { background: rgba(155,168,180,0.1); color: var(--silver); border: 1px solid rgba(155,168,180,0.2); }
+
+  /* ===== FACTION CARD ===== */
+  .faction-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 6px;
+    padding: 1.8rem;
+    margin: 2rem 0;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .faction-card:hover { border-color: rgba(201,168,76,0.35); }
+
+  .faction-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(201,168,76,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .faction-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem;
+    color: var(--gold-light);
+    margin-bottom: 0.3rem;
+  }
+
+  .faction-desc {
+    font-style: italic;
+    color: var(--silver);
+    font-size: 0.95rem;
+    margin-bottom: 1.2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .faction-section {
+    margin-top: 1rem;
+  }
+
+  .faction-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    color: var(--gold);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 0.4rem;
+  }
+
+  .rank-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .rank-list li {
+    background: rgba(201,168,76,0.07);
+    border: 1px solid rgba(201,168,76,0.15);
+    padding: 0.2rem 0.7rem;
+    font-size: 0.82rem;
+    color: var(--parchment-deep);
+    border-radius: 2px;
+  }
+
+  /* ===== GOD CARD ===== */
+  .god-card {
+    border: 1px solid rgba(201,168,76,0.12);
+    border-radius: 6px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .god-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    color: var(--gold-light);
+  }
+
+  .god-epithet {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    color: var(--silver);
+    font-size: 0.95rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .god-domain {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.8rem;
+  }
+
+  /* ===== TIMELINE ===== */
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, var(--gold), rgba(201,168,76,0.1));
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.35rem;
+    top: 0.5rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 2px solid var(--midnight);
+    box-shadow: 0 0 8px rgba(201,168,76,0.5);
+  }
+
+  .timeline-date {
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    color: var(--gold);
+    opacity: 0.8;
+    margin-bottom: 0.2rem;
+  }
+
+  .timeline-event {
+    color: var(--parchment-dark);
+    font-size: 0.95rem;
+  }
+
+  /* ===== TRAIT TABLES ===== */
+  .trait-table {
+    margin: 1rem 0;
+  }
+
+  .trait-table td:first-child {
+    width: 3rem;
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  /* ===== STAT BLOCK ===== */
+  .stat-block {
+    background: rgba(242,232,213,0.04);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 4px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .stat-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.3rem 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    color: var(--gold);
+    opacity: 0.8;
+    white-space: nowrap;
+  }
+
+  .stat-value {
+    color: var(--parchment-dark);
+    font-size: 0.9rem;
+  }
+
+  /* ===== CITY CARD ===== */
+  .city-card {
+    border: 1px solid rgba(201,168,76,0.12);
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 2rem 0;
+  }
+
+  .city-header {
+    background: linear-gradient(135deg, rgba(201,168,76,0.1), rgba(201,168,76,0.03));
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .city-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem;
+    color: var(--gold-light);
+  }
+
+  .city-name-en {
+    font-size: 0.8rem;
+    color: var(--silver);
+    opacity: 0.6;
+    margin-left: 0.5rem;
+  }
+
+  .city-body { padding: 1.5rem; }
+
+  .city-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.8rem;
+    margin-bottom: 1.2rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .city-stat {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .city-stat-label {
+    font-size: 0.7rem;
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+  }
+
+  .city-stat-value {
+    font-size: 0.9rem;
+    color: var(--parchment-dark);
+  }
+
+  /* ===== LOCATION LIST ===== */
+  .location-item {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .location-item:last-child { border-bottom: none; }
+
+  .location-name {
+    font-family: 'IM Fell English', serif;
+    font-size: 1rem;
+    color: var(--gold-light);
+    margin-bottom: 0.3rem;
+  }
+
+  /* ===== INFECTION TABLE ===== */
+  .infection-table td:first-child { color: var(--gold); font-weight: 600; }
+
+  /* ===== BACKGROUND CARD ===== */
+  .background-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 6px;
+    padding: 2rem;
+    margin: 2rem 0;
+  }
+
+  .background-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    color: var(--gold-light);
+    margin-bottom: 0.3rem;
+  }
+
+  /* ===== LIST STYLES ===== */
+  ul.styled-list {
+    list-style: none;
+    margin: 0.5rem 0 1rem;
+  }
+
+  ul.styled-list li {
+    padding: 0.2rem 0;
+    color: var(--parchment-dark);
+    padding-left: 1.2rem;
+    position: relative;
+    font-size: 0.95rem;
+  }
+
+  ul.styled-list li::before {
+    content: '◆';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 0.5rem;
+    top: 0.5rem;
+  }
+
+  /* ===== SPECIAL RACE BLOCK ===== */
+  .race-feature {
+    background: rgba(255,255,255,0.02);
+    border-left: 2px solid var(--gold);
+    padding: 0.8rem 1.2rem;
+    margin: 0.7rem 0;
+  }
+
+  .race-feature-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    color: var(--gold);
+    margin-bottom: 0.3rem;
+  }
+
+  /* ===== MAGIC LEVEL TABLE ===== */
+  .magic-level {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .magic-level-num {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: var(--gold);
+    min-width: 3rem;
+  }
+
+  .magic-level-desc { color: var(--parchment-dark); font-size: 0.9rem; }
+  .magic-level-req { color: var(--silver); font-size: 0.85rem; }
+
+  /* ===== LAYER CARD ===== */
+  .layer-card {
+    border: 1px solid rgba(74,45,122,0.25);
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 1.5rem 0;
+    background: rgba(74,45,122,0.04);
+  }
+
+  .layer-header {
+    background: linear-gradient(135deg, rgba(74,45,122,0.2), rgba(74,45,122,0.05));
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(74,45,122,0.2);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .layer-num {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    color: var(--purple-mid);
+    font-weight: 900;
+    opacity: 0.7;
+  }
+
+  .layer-title-block .layer-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: #9b7fd4;
+  }
+
+  .layer-depth { font-size: 0.8rem; color: var(--silver); opacity: 0.7; }
+  .layer-body { padding: 1.2rem 1.5rem; }
+
+  /* ===== EPOCH BADGE ===== */
+  .epoch-banner {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 3px;
+    padding: 0.3rem 0.8rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+
+  /* ===== MUTATION TABLES ===== */
+  .mutation-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+
+  @media (max-width: 700px) {
+    .mutation-grid { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .main { padding: 2rem 1.5rem; }
+  }
+
+  /* ===== ARCHIMAGE TABLE ===== */
+  .archimage-row td:first-child { color: var(--gold-light); }
+  .archimage-row td:nth-child(2) { color: var(--silver); }
+  .archimage-row td:nth-child(3) { color: var(--purple-mid); color: #9b7fd4; }
+
+  /* ===== DIVIDER ===== */
+  .ornamental-divider {
+    text-align: center;
+    margin: 3rem 0;
+    color: var(--gold);
+    opacity: 0.4;
+    letter-spacing: 0.5em;
+    font-size: 0.9rem;
+  }
+
+  /* ===== HAMBURGER ===== */
+  .menu-toggle {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 200;
+    background: rgba(13,10,20,0.9);
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold);
+    padding: 0.5rem 0.8rem;
+    cursor: pointer;
+    font-size: 1.2rem;
+    border-radius: 3px;
+  }
+
+  strong { color: var(--parchment); }
+
+  em { color: var(--gold-light); font-style: italic; }
+
+  code {
+    background: rgba(201,168,76,0.1);
+    padding: 0.1rem 0.4rem;
+    border-radius: 2px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    color: var(--gold-light);
+  }
+
+  /* ===== GRID COLS ===== */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  @media (max-width: 800px) { .two-col { grid-template-columns: 1fr; } }
+
+  .info-box {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(201,168,76,0.1);
+    border-radius: 4px;
+    padding: 1.2rem;
+  }
+
+  .info-box-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    opacity: 0.7;
+    margin-bottom: 0.3rem;
+  }
+
+  /* SCROLLSPY active state */
+  .nav-item.active {
+    color: var(--gold-light);
+    border-left-color: var(--gold);
+    background: rgba(201,168,76,0.07);
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero" id="top">
+  <div class="stars" id="stars"></div>
+  <div class="hero-ornament">⚔ ✦ ⚔</div>
+  <h1>ГАРТЕНЕВЕР</h1>
+  <p class="hero-sub">Путеводитель по Миру Магической Науки</p>
+  <div class="hero-divider"></div>
+  <p class="hero-desc">Мир, рождённый из Хаоса и укрощённый магией. Эпоха Богов, Эпоха Меча, Эпоха Хаоса — и сегодняшняя Эпоха Магии, длящаяся 934 года.</p>
+  <div class="scroll-hint">↓</div>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="layout">
+
+<!-- SIDEBAR NAV -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-title">⚔ ГАРТЕНЕВЕР</div>
+    <div class="sidebar-logo-sub">Справочник D&D 5e · Alpha 0.3</div>
+  </div>
+
+  <div class="nav-section-label">Обзор</div>
+  <a class="nav-item" href="#overview">Краткое описание мира</a>
+  <a class="nav-item" href="#timeline">Хронология эпох</a>
+  <a class="nav-item" href="#races-list">Расы Гартеневера</a>
+
+  <div class="nav-section-label">Глава 1. История</div>
+  <a class="nav-item" href="#epoch-gods">Эпоха Богов</a>
+  <a class="nav-item sub" href="#creation">Создание мира</a>
+  <a class="nav-item sub" href="#life">Зарождение жизни</a>
+  <a class="nav-item sub" href="#master">Мастер</a>
+  <a class="nav-item sub" href="#xarros">Генерал Ксаррос</a>
+  <a class="nav-item" href="#epoch-sword">Эпоха Меча</a>
+  <a class="nav-item sub" href="#assassin">Ассасин</a>
+  <a class="nav-item sub" href="#monk">Монах</a>
+  <a class="nav-item sub" href="#dragon-revolt">Бунт Дракона</a>
+  <a class="nav-item" href="#epoch-chaos">Эпоха Хаоса</a>
+  <a class="nav-item sub" href="#chaos-events">События</a>
+  <a class="nav-item sub" href="#emilias">Эмилиас Айканар</a>
+  <a class="nav-item" href="#epoch-magic">Эпоха Магии</a>
+  <a class="nav-item sub" href="#early-magic">Ранняя (0–212)</a>
+  <a class="nav-item sub" href="#mid-magic">Средняя (212–430)</a>
+  <a class="nav-item sub" href="#late-magic">Поздняя (430–934)</a>
+
+  <div class="nav-section-label">Глава 2. Культура</div>
+  <a class="nav-item" href="#magic-system">Магия</a>
+  <a class="nav-item" href="#languages">Языки</a>
+  <a class="nav-item" href="#calendar">Время и Календарь</a>
+  <a class="nav-item" href="#factions">Фракции</a>
+  <a class="nav-item sub" href="#guild-abyss">Гильдия Исследователей</a>
+  <a class="nav-item sub" href="#verian-order">Верийский Орден</a>
+  <a class="nav-item sub" href="#collegium">Коллегия Магии</a>
+  <a class="nav-item sub" href="#chaos-followers">Последователи Хаоса</a>
+  <a class="nav-item sub" href="#inquisition">Солмаринская Инквизиция</a>
+  <a class="nav-item sub" href="#ash-brotherhood">Братство Пепла</a>
+  <a class="nav-item" href="#religion">Религия</a>
+  <a class="nav-item sub" href="#high-pantheon">Высший Пантеон</a>
+  <a class="nav-item sub" href="#chaos-pantheon">Пантеон Хаоса</a>
+
+  <div class="nav-section-label">Глава 3. Страны</div>
+  <a class="nav-item" href="#veria">Верийское Королевство</a>
+  <a class="nav-item sub" href="#valorian">Валориан</a>
+  <a class="nav-item sub" href="#blancalden">Бланкальден</a>
+  <a class="nav-item sub" href="#itergon">Итергон</a>
+  <a class="nav-item sub" href="#seekers-camp">Лагерь Искателей</a>
+  <a class="nav-item" href="#solmarin-state">Солмаринское Государство</a>
+  <a class="nav-item sub" href="#solmarin-city">Солмарин</a>
+  <a class="nav-item sub" href="#luminar">Люминар</a>
+  <a class="nav-item sub" href="#sevra">Севра</a>
+  <a class="nav-item sub" href="#torfild">Торфилд и Корвус</a>
+  <a class="nav-item" href="#aikanaria">Айканария</a>
+  <a class="nav-item sub" href="#dominion">Доминион</a>
+  <a class="nav-item sub" href="#foen">Фоен</a>
+  <a class="nav-item sub" href="#talmyris">Талмирис</a>
+  <a class="nav-item" href="#grimnest">Архипелаг Гримнест</a>
+  <a class="nav-item sub" href="#great-clans">Великие Кланы</a>
+  <a class="nav-item" href="#ark">Ковчег</a>
+  <a class="nav-item" href="#wild-lands">Дикие Земли</a>
+
+  <div class="nav-section-label">Глава 4. Бездна</div>
+  <a class="nav-item" href="#abyss">Бездна</a>
+  <a class="nav-item sub" href="#infection">Очки Заражения</a>
+  <a class="nav-item sub" href="#relicts">Реликты и Артефакты</a>
+  <a class="nav-item sub" href="#stable-zones">Стабильные Зоны</a>
+  <a class="nav-item sub" href="#abyss-layers">Слои Бездны</a>
+
+  <div class="nav-section-label">Глава 5. Персонаж</div>
+  <a class="nav-item" href="#classes">Классы</a>
+  <a class="nav-item sub" href="#mage-scholars">Маги-ученые</a>
+  <a class="nav-item sub" href="#fading-art">Угасающее искусство</a>
+  <a class="nav-item sub" href="#followers">Последователи</a>
+  <a class="nav-item sub" href="#bound-otherwise">Связанные иначе</a>
+  <a class="nav-item sub" href="#between-worlds">Между мирами</a>
+  <a class="nav-item" href="#races">Расы</a>
+  <a class="nav-item sub" href="#humans">Люди</a>
+  <a class="nav-item sub" href="#elves">Эльфы</a>
+  <a class="nav-item sub" href="#dwarves">Дварфы</a>
+  <a class="nav-item sub" href="#dragonborn">Драконорождённые</a>
+  <a class="nav-item sub" href="#animal-races">Животноподобные</a>
+  <a class="nav-item sub" href="#skyliytsy">Скайлийцы</a>
+  <a class="nav-item" href="#backgrounds">Предыстории</a>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+<!-- ======================================================= -->
+<!--                       OVERVIEW                           -->
+<!-- ======================================================= -->
+<section class="section" id="overview">
+  <div class="chapter-header">
+    <div class="chapter-number">ОБЗОР</div>
+    <h1 class="chapter-title">Краткое описание мира</h1>
+  </div>
+
+  <p>Гартеневер — мир, рождённый из Хаоса и укрощённый магией. Тысячу лет назад боги подняли континенты из бушующего океана первородной энергии, запечатав его в бездонной пропасти. Эпохи сменяли друг друга: Эпоха Богов, когда создавалась жизнь. Эпоха Меча, когда герои вроде Мастера, Ассасина и Монаха вершили судьбы народов силой клинка и воли. Эпоха Хаоса, когда печать была сломана и мир едва не погиб.</p>
+  <p>А затем пришла Эпоха Магии.</p>
+  <p>Эльф по имени Эмилиас Айканар укротил Хаос, превратив дикую стихию в науку. Сегодня, спустя девять веков, магия пронизывает всё: города освещают парящие огни, летающие острова несут академии сквозь облака, а Коллегия Магии следит за каждым, кто способен творить заклинания.</p>
+
+  <div class="two-col">
+    <div class="info-box">
+      <div class="info-box-label">Три великих государства</div>
+      <ul class="styled-list">
+        <li><strong>Верийское Королевство</strong> — торговый и политический центр, где древний Орден хранит традиции ушедших воинов</li>
+        <li><strong>Солмаринское Государство</strong> — теократия трёх церквей, чья Инквизиция выжигает ересь священным огнём</li>
+        <li><strong>Айканария</strong> — магократия волшебников, где девять Архимагов вершат судьбы миллионов</li>
+      </ul>
+    </div>
+    <div class="info-box">
+      <div class="info-box-label">Расы мира</div>
+      <ul class="styled-list">
+        <li>Эльфы</li>
+        <li>Дварфы</li>
+        <li>Люди</li>
+        <li>Драконорождённые</li>
+        <li>Тритоны</li>
+        <li>Шифтеры</li>
+        <li>Животноподобные расы (грунги, кенку, табакси, юань-ти, тортлинги)</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>В глубинах Бездны — единственного прохода к запечатанному океану Хаоса — исследователи ищут артефакты, способные изменить мир. Или уничтожить его.</p>
+</section>
+
+<!-- TIMELINE -->
+<section class="section" id="timeline">
+  <h2 class="section-title">Хронология эпох</h2>
+
+  <div class="card">
+    <div class="card-title">⚡ Эпоха Богов: −762 до −462 г. до Э.М.</div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">−762 до −755</div>
+        <div class="timeline-event">Зарождение жизни — боги создают континенты и первых существ</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">−464 до −462</div>
+        <div class="timeline-event">Война со скайлийцами</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚔ Эпоха Меча: −462 до −152 г. до Э.М.</div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">−462 до −356</div>
+        <div class="timeline-event">Жизнь Ассасина — создание организации, ставшей основой Верийского Королевства</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">−232 до −152</div>
+        <div class="timeline-event">Жизнь Монаха — основание Солмарина и церкви Оранона</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card crimson">
+    <div class="card-title">🌀 Эпоха Хаоса: −152 до −1 г. до Э.М.</div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">−152</div>
+        <div class="timeline-event">Бунт Драконьего бога — Уртас и Нирант снимают печать Бездны</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">−82</div>
+        <div class="timeline-event">Структуризация магии — Эмилиас Айканар создаёт систему магических кругов</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">−1</div>
+        <div class="timeline-event">Запечатывание Бездны — Эмилиас накладывает печать на вход в Бездну</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card purple">
+    <div class="card-title">✨ Эпоха Магии: 0–934 г. (текущая)</div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">4 г.</div>
+        <div class="timeline-event">Создание Доминиона — первой магической академии</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">5–10 г.</div>
+        <div class="timeline-event">Создание Верийского Королевства</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">5–12 г.</div>
+        <div class="timeline-event">Создание Солмаринского Государства</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">216 г.</div>
+        <div class="timeline-event">Создание Инфузионной школы магии</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">256 г.</div>
+        <div class="timeline-event">Основание Палаты Путей и Торгов</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">267–271 г.</div>
+        <div class="timeline-event">Создание Айканарии</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">273 г.</div>
+        <div class="timeline-event">Формирование Коллегии Магии</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">275 г.</div>
+        <div class="timeline-event">Укрепление клана Айканар</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">430 г.</div>
+        <div class="timeline-event">Запуск Ковчега — начало Поздней Эпохи Магии</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">934 г.</div>
+        <div class="timeline-event">Текущий момент</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!--                    CHAPTER 1: HISTORY                    -->
+<!-- ======================================================= -->
+<div class="ornamental-divider">✦ ✦ ✦ ГЛАВА 1 ✦ ✦ ✦</div>
+
+<section class="section" id="epoch-gods">
+  <div class="chapter-header">
+    <div class="chapter-number">ГЛАВА 1 · ИСТОРИЯ</div>
+    <h1 class="chapter-title">Эпоха Богов</h1>
+  </div>
+
+  <h3 class="subsection-title" id="creation">Создание мира</h3>
+  <p>История мира Гартеневера начинается с Эпохи Богов — времени, когда верховные боги, такие как Аэтерион, Левианта и Оранон, поднимали континенты, острова и само море из океана первородной, бушующей магии Хаоса. Как только земля была готова, три великих бога закрыли доступ к океану магии Хаоса, оставив лишь один узкий разлом, который позже получил имя Бездна.</p>
+
+  <h3 class="subsection-title" id="life">Зарождение жизни</h3>
+  <p>Создав мир, Аэтерион создал множество статуй самых разнообразных существ, а затем запитал их своей божественной силой, даровав подобие сознания. Какие-то статуи стали птицами, какие-то — ящерицами, третьи — рыбами, жуками, и, наконец, несколько статуй приняли облик гуманоидов. Такова легенда появления людей.</p>
+  <p>Вдохновившись созданиями Аэтериона, другой бог, по имени Уртас, решил слегка извратить его статуи. Он объединял несколько заготовок, переплетая их формы. Одну из своих лучших статуй — изваяние огромной рептилии — он соединил с творением Аэтериона в виде человека. Итоговая тварь переняла от людей не только гуманоидную форму, но и интеллект. <strong>Драконорождённые</strong> — так Уртас назвал этих существ.</p>
+
+  <h3 class="subsection-title" id="master">Мастер</h3>
+  <p>Среди людей был один воин, имя которого было утеряно в истории. Его прозвищем было <strong>Мастер</strong>. Его владению мечом не было равных ни среди людей, ни среди драконорождённых, ни даже среди монстров. Главный его подвиг — война со скайлийцами, созданными хранителем Бездны — богом Нирантом, не без помощи Уртаса и в тайне от верховных богов. Война была успешна и масштабна. К несчастью, цена за победу была слишком велика. Мастер погиб.</p>
+
+  <h3 class="subsection-title" id="xarros">Генерал Ксаррос</h3>
+  <p>Генерал армии скайлийцев был известен не только своим суровым нравом и стратегиями, но и за его невероятную силу. Как никто другой он умел управлять тьмой, из которой сотканы тела его расы, и использовать это в бою. Именно Ксаррос был последней жертвой Мастера, и именно он, своим последним рывком убил великого воина.</p>
+
+  <div class="note-block">
+    <div class="note-title">📍 Историческое место</div>
+    <p>Эта битва произошла в северной части хребта Падших, около современного Фоена. Это место, где ныне хранится меч Мастера, и которое охраняется семьей <strong>Такиноро</strong>.</p>
+  </div>
+</section>
+
+<section class="section" id="epoch-sword">
+  <div class="chapter-header">
+    <div class="chapter-number">ГЛАВА 1 · ИСТОРИЯ</div>
+    <h1 class="chapter-title">Эпоха Меча</h1>
+  </div>
+
+  <p>Результатом войны со скайлийцами стала Эпоха меча. Время великих воинов, что разрывали целые скалы своими ударами. Современными историками Эпоха Меча считается самой мирной, как минимум среди эпох прошлого. Примечательна же эта эпоха в основном личностями.</p>
+
+  <h3 class="subsection-title" id="assassin">Ассасин</h3>
+  <p>Воин, который полагался не на силу и меч, а на точность и два острых кинжала. За его плечами не одно убийство и не один подвиг. Но главное — он создал организацию, которая после Эпохи Хаоса переросла в <strong>Верийское Королевство</strong>. Те немногие воины, что ещё ходят по свету, уважают наследие Ассасина, хоть никто уже и не помнит его имя.</p>
+
+  <h3 class="subsection-title" id="monk">Монах</h3>
+  <p>Человек, руки которого, по легендам, могли пробивать камни, гнуть металлы и бить, не прикасаясь. В первую очередь Монах — религиозный деятель. Именно Монах заложил первые камни «города богов» Солмарина, и именно он вывел Церковь Оранона в статус одной из трёх главных религий всего Гартеневера.</p>
+
+  <h3 class="subsection-title" id="dragon-revolt">Бунт Драконьего бога</h3>
+  <p>В то время как смертные строили свою цивилизацию, у богов возникало всё больше конфликтов. Божественное общество поделилось на две части. Первая, во главе с верховными богами, желала уничтожить единственный проход к океану Хаоса — Бездну. Вторая часть богов, во главе с Уртасом, утверждала, что океан можно использовать и дальше.</p>
+  <p>Пытаясь помешать этому, Уртас подговорил Ниранта снять печать, наложенную Ораноном после создания мира. Нирант согласился, ибо и так был не согласен с решением высших богов. Так началась <strong>Эпоха Хаоса</strong>.</p>
+</section>
+
+<section class="section" id="epoch-chaos">
+  <div class="chapter-header">
+    <div class="chapter-number">ГЛАВА 1 · ИСТОРИЯ</div>
+    <h1 class="chapter-title">Эпоха Хаоса</h1>
+  </div>
+
+  <div class="quote-block">
+    <div class="quote-text">Действия Уртаса и Ниранта — непростительны. Они не только восстали против воли высших богов, но и обрекли смертных на катастрофу. Бунт Уртаса может уничтожить не только наши творения, но и нас самих. Наказанием грешников станут вечные страдания во славу Света, Неба и Моря.</div>
+    <div class="quote-attribution">Аэтерион, Бог Света</div>
+  </div>
+
+  <p>Высшие боги быстро погасили пламя конфликта. Наказанием же Уртаса и Ниранта стало бесконечное пожирание их тел драконами. Место их заточения и по сей день неизвестно.</p>
+
+  <h3 class="subsection-title" id="chaos-events">События Эпохи Хаоса</h3>
+  <p>Вырвавшись из-под печати, магия Хаоса быстро превратила весь мир в бесконечную, постоянно изменяющуюся пустошь. На смертном одре Монах рассказал об источнике магии, и многие воины отправились в Бездну в надежде вновь закрыть печать. Большинство не вернулись, а тех несчастных, кто всё же выжил, Бездна скрестила с забредшими в неё животными, наделив многих из них более гуманоидными чертами и сознанием. <strong>Грунги, тортлы, совлины, шифтеры</strong> и все подобные расы начались именно там, в Бездне.</p>
+  <p>Эпоха Хаоса также заставила выйти из многовековой закрытости эльфов с архипелага Гримнест. Именно эльфы за счёт своего долголетия достигли наибольшего прогресса в области защиты от магии Хаоса.</p>
+
+  <h3 class="subsection-title" id="emilias">Эмилиас Айканар</h3>
+  <p>Эльф, в возрасте 507 лет укротивший Хаос и ставший первым магом в истории. Он же первым начал выделять магию как науку, а не как неукротимую стихию. Эмилиас разработал систему магических кругов, работающих благодаря точным формулам. Сочетания формул в определённых последовательностях позволяли достигать невероятных результатов — от огненных шаров до мгновенного убийства.</p>
+  <p>Ещё через 80 лет Эмилиас смог создать заклинание-печать, которую наложил на входе в Бездну. Эмилиас умер в возрасте 647 лет, оставив после себя лишь свои труды, ныне известные как <em>«Компендиум базовой магии»</em>.</p>
+</section>
+
+<section class="section" id="epoch-magic">
+  <div class="chapter-header">
+    <div class="chapter-number">ГЛАВА 1 · ИСТОРИЯ</div>
+    <h1 class="chapter-title">Эпоха Магии</h1>
+  </div>
+
+  <p>Эпоха Магии — текущая эпоха в Гартеневере, которая длится уже 934 года. В этой эпохе воины, да и в целом немагический бой практически не ценится. Маги Воплощения лёгким движением руки вызывают шторма на море, маги Ограждения создают мощнейшие магические барьеры, а Некроманты поднимают толпы нежити.</p>
+
+  <h3 class="subsection-title" id="early-magic">Ранняя Эпоха Магии (0–212 гг.)</h3>
+  <p>Несмотря на то, что именно с помощью магии были окончены страдания Эпохи Хаоса, первое время все относились к новой силе с настороженностью. Последователи Айканара — три мага: <strong>Кэдрик Ворн</strong> (Человек), <strong>Лирианна Куталион</strong> (эльфийка) и <strong>Фалонд Данкил</strong> (дварф) — основали первую магическую академию, названную <strong>Доминионом</strong>.</p>
+
+  <h4 class="sub-subsection">Верийское Королевство</h4>
+  <p>Валориан стал одним из первых городов, сумевших возродиться из руин. Верийский Орден — организация, идущая своими корнями к последователям Ассасина — стала фактическим правителем региона. Когда Валориан был окончательно укреплён, Верийцы объявили своего лидера, <strong>Нириана Кенисвилля</strong>, первым королём. Так появилось Верийское Королевство.</p>
+
+  <h4 class="sub-subsection">Солмаринское Государство</h4>
+  <p>Солмарин вырос на месте древнего храмового комплекса, посвящённого трём высшим богам. После катастроф Эпохи Хаоса именно храмы Солмарина стали прибежищем для выживших. Правление взяли на себя три <strong>Верховных Епископа</strong> — по одному от каждой из церквей Высшего Пантеона.</p>
+
+  <h3 class="subsection-title" id="mid-magic">Средняя Эпоха Магии (212–430 гг.)</h3>
+
+  <h4 class="sub-subsection">Инфузионная школа (216 г.)</h4>
+  <p>В Доминионе была создана <strong>Инфузионная школа</strong>, которая учила своих последователей создавать невероятные магические артефакты. Это была девятая, новейшая школа магии.</p>
+
+  <h4 class="sub-subsection">Айканария (267–271 гг.)</h4>
+  <p>Доминион стал полноценным городом. Когда даже самые северные города Гартеневера признали силу Доминиона, было сформировано новое королевство — <strong>Айканария</strong>. Во главе встали 9 волшебников, получивших звания Архимагов, а само правительство прозвали Советом.</p>
+
+  <h4 class="sub-subsection">Коллегия Магии (273 г.)</h4>
+  <p>Для контроля использования магии была создана Коллегия Магии. Управляет Коллегией Архимаг школы Преобразования. Солмарин и Валориан быстро согласились на деятельность организации на их территории.</p>
+
+  <h4 class="sub-subsection">Гильдия Исследователей Бездны</h4>
+  <p>В Верийском Королевстве возникла новая организация — <strong>Гильдия Исследователей Бездны</strong>, учрежденная королём Эдриком Кенисвиллем II. Вокруг входа в древние пещеры вырос <strong>Лагерь Искателей</strong>.</p>
+
+  <h3 class="subsection-title" id="late-magic">Поздняя Эпоха Магии (430–934 гг.)</h3>
+  <p>Силы расставлены, государства созданы, и мир пришёл к своему текущему состоянию. Многочисленные исследователи Бездны спускаются в пещеры в надежде найти нечто невероятное, маги продолжают совершенствовать свои заклинания, а воинское искусство окончательно умирает, уступая место прогрессу.</p>
+
+  <h4 class="sub-subsection">Ковчег (430 г.)</h4>
+  <p>Запущенный в 430 году инфузионный механизм — величайшее изобретение эпохи. Он представляет из себя огромных размеров остров, способный подниматься в воздух. На его землях расположена академия Инфузионной магии — лучшая академия всего Гартеневера. Создан Ковчег <strong>Раяном Айканаром</strong>.</p>
+</section>
+
+<!-- ======================================================= -->
+<!--                    CHAPTER 2: CULTURE                    -->
+<!-- ======================================================= -->
+<div class="ornamental-divider">✦ ✦ ✦ ГЛАВА 2 ✦ ✦ ✦</div>
+
+<section class="section" id="magic-system">
+  <div class="chapter-header">
+    <div class="chapter-number">ГЛАВА 2 · КУЛЬТУРА</div>
+    <h1 class="chapter-title">Магия</h1>
+  </div>
+
+  <p>Магия на территории 4-х из восьми стран (Верийское королевство, Солмаринское государство, Айканария и клан Айканар) контролируется законами Коллегии Магии.</p>
+
+  <div class="card">
+    <div class="card-title">Уровни доступа к магии</div>
+    <div class="magic-level">
+      <div class="magic-level-num">Заговоры</div>
+      <div class="magic-level-desc">Доступны всем без ограничений</div>
+    </div>
+    <div class="magic-level">
+      <div class="magic-level-num">1–2 круг</div>
+      <div class="magic-level-desc">Требует <strong>регистрации</strong> (не ранга, просто записи)</div>
+    </div>
+    <div class="magic-level">
+      <div class="magic-level-num">3–4 круг</div>
+      <div class="magic-level-desc">Ранг <strong>Ученика Коллегии</strong></div>
+    </div>
+    <div class="magic-level">
+      <div class="magic-level-num">5–7 круг</div>
+      <div class="magic-level-desc">Ранг <strong>Мага Коллегии</strong></div>
+    </div>
+    <div class="magic-level">
+      <div class="magic-level-num">8–9 круг</div>
+      <div class="magic-level-desc">Ранг <strong>Магистра</strong></div>
+    </div>
+  </div>
+
+  <div class="note-block">
+    <div class="note-title">⚠ Исключения</div>
+    <p>Правила Коллегии работают для всех заклинательных классов, кроме паладинов, жрецов, друидов и колдунов.</p>
+  </div>
+
+  <p>Заговоры доступны всем, но их практическое применение ограничено. <em>Prestidigitation</em> может почистить одежду, но не заменит ткача. <em>Mending</em> чинит трещину, но не создаёт инструмент. Массовое производство по-прежнему требует ручного труда — магия лишь ускоряет процесс, а не отменяет его.</p>
+</section>
+
+<section class="section" id="languages">
+  <h2 class="section-title">Языки</h2>
+  <p>В Гартеневере владение языком определяется скорее местом рождения и родом занятий, чем расой. Ребёнок табакси, родившийся в Бланкальдене, скорее всего, будет знать Общий и Эльваску, но может совершенно не понимать наречия своих предков из Диких Земель.</p>
+
+  <h3 class="subsection-title">Стандартные языки</h3>
+  <table>
+    <thead><tr><th>Язык</th><th>Носители</th><th>Письменность</th></tr></thead>
+    <tbody>
+      <tr><td>Общий</td><td>Урождённые жители Континента</td><td>Общая</td></tr>
+      <tr><td>Дварфийский</td><td>Дварфы, жители Бездны</td><td>Дварфийская</td></tr>
+      <tr><td>Язык Гримнеста</td><td>Эльфы</td><td>Эльфийская</td></tr>
+      <tr><td>Кетос</td><td>Моряки, жрецы Левианты</td><td>Эльфийская</td></tr>
+      <tr><td>Сильван</td><td>Жители лесных деревушек</td><td>Общая</td></tr>
+      <tr><td>Эльваска</td><td>Шахтёры, жители городов у гор</td><td>Дварфийская</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="subsection-title">Экзотические языки</h3>
+  <table>
+    <thead><tr><th>Язык</th><th>Носители</th><th>Письменность</th></tr></thead>
+    <tbody>
+      <tr><td>Язык Бездны</td><td>Древние сущности, историки</td><td>Драконья</td></tr>
+      <tr><td>Драконий</td><td>Драконы, драконорождённые, жрецы Уртаса</td><td>Драконья</td></tr>
+      <tr><td>Скайлийский</td><td>Скайлийцы</td><td>Дварфийская</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="section" id="calendar">
+  <h2 class="section-title">Время и Календарь</h2>
+  <p>Мир Гартеневера живёт по циклу Высшего Пантеона. Год состоит из <strong>7 месяцев</strong>, каждый из которых длится <strong>52 дня</strong> (всего 364 дня в году). Неделя в Гартеневере называется «декадой» и длится 7 дней.</p>
+
+  <table>
+    <thead><tr><th>№</th><th>Месяц</th><th>Покровитель</th><th>Сезон</th><th>Событие</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><strong>Заресвет</strong></td><td>Аэтерион</td><td>Начало весны</td><td>1 Заресвета: Пробуждение Света</td></tr>
+      <tr><td>2</td><td><strong>Айнхол</strong></td><td>Тарвел</td><td>Весна</td><td>Ярмарки ремесел и кузнечные обряды</td></tr>
+      <tr><td>3</td><td><strong>Айшфол</strong></td><td>Лиэр</td><td>Лето</td><td>Магические экзамены и вступительные испытания</td></tr>
+      <tr><td>4</td><td><strong>Фейдинлайт</strong></td><td>Сильверион</td><td>Конец лета</td><td>Праздник Урожая и ритуалы очищения лесов</td></tr>
+      <tr><td>5</td><td><strong>Гривейк</strong></td><td>Оранон</td><td>Осень</td><td>Сезон Небесных Штормов; миграция грифонов</td></tr>
+      <tr><td>6</td><td><strong>Сандерхит</strong></td><td>Тиарен</td><td>Начало зимы</td><td>Месяц Исполнения Клятв и Верховных Судов</td></tr>
+      <tr><td>7</td><td><strong>Редтайд</strong></td><td>Левианта</td><td>Зима</td><td><strong>31 Редтайда: Праздник Миграции (Конец года)</strong></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- FACTIONS -->
+<section class="section" id="factions">
+  <div class="chapter-header">
+    <div class="chapter-number">ГЛАВА 2 · КУЛЬТУРА</div>
+    <h1 class="chapter-title">Фракции</h1>
+  </div>
+
+  <!-- Guild -->
+  <div class="faction-card" id="guild-abyss">
+    <div class="faction-name">⚒ Гильдия Исследователей Бездны</div>
+    <div class="faction-desc">Организация, учреждённая первым Верийским королём. Специализируется на изучении места заточения магии Хаоса. Имеют базы по всей территории Бездны.</div>
+
+    <div class="two-col">
+      <div>
+        <div class="faction-label">Цели</div>
+        <ul class="styled-list">
+          <li>Исследование Бездны</li>
+          <li>Сбор артефактов и реликтов</li>
+          <li>Выявление талантливых магов</li>
+        </ul>
+        <div class="faction-label">Убеждения</div>
+        <ul class="styled-list">
+          <li>Исследование — величайшая радость</li>
+          <li>Опасности — это весело</li>
+        </ul>
+      </div>
+      <div>
+        <div class="faction-label">Ранги</div>
+        <ul class="rank-list">
+          <li>🟢 Зелёный ранг (1)</li>
+          <li>🔴 Красный ранг (2)</li>
+          <li>🔵 Синий ранг (3)</li>
+          <li>🟣 Фиолетовый ранг (4)</li>
+          <li>⚫ Чёрный ранг (5)</li>
+        </ul>
+      </div>
+    </div>
+    <p style="font-size:0.9rem; color:var(--silver); margin-top:0.8rem;">Агенты гильдии работают в основном в Бездне, но часто отправляются и в ещё неисследованные подземелья. Они высоко ценят командную работу и сбалансированные отряды.</p>
+  </div>
+
+  <!-- Verian Order -->
+  <div class="faction-card" id="verian-order">
+    <div class="faction-name">🗡 Верийский Орден</div>
+    <div class="faction-desc">Орден, целиком подчиняющийся верийскому королю. Тайная организация, выполняющая роль телохранителей, шпионов и личной армии верийского дворянства. Фактически единственная организация, систематически использующая немагический бой.</div>
+
+    <div class="two-col">
+      <div>
+        <div class="faction-label">Цели</div>
+        <ul class="styled-list">
+          <li>Обеспечение безопасности дворян</li>
+          <li>Убийство опасных для королевства людей</li>
+          <li>Препятствование шпионажу со стороны Доминиона и Солмарина</li>
+        </ul>
+        <div class="faction-label">Убеждения</div>
+        <ul class="styled-list">
+          <li>Верийское Королевство — величайшее за всю историю</li>
+          <li>Власть короля абсолютна</li>
+          <li>Все враги верийцев должны быть уничтожены</li>
+        </ul>
+      </div>
+      <div>
+        <div class="faction-label">Ранги</div>
+        <ul class="rank-list">
+          <li>Рядовой (1)</li>
+          <li>Смотритель (2)</li>
+          <li>Верховный Смотритель (3)</li>
+          <li>Куратор (4)</li>
+          <li>Старший Куратор (5)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Collegium -->
+  <div class="faction-card" id="collegium">
+    <div class="faction-name">📜 Коллегия Магии</div>
+    <div class="faction-desc">Организация, контролирующая использование арканной магии на территории Солмаринского государства, Верийского Королевства, Айканарии и на территориях клана Айканар. Управляется Архимагом школы Преобразования из Айканарии.</div>
+
+    <div class="two-col">
+      <div>
+        <div class="faction-label">Цели</div>
+        <ul class="styled-list">
+          <li>Контроль за использованием опасной магии</li>
+          <li>Обучение и сертификация магов</li>
+          <li>Предотвращение магических катастроф</li>
+          <li>Поиск и нейтрализация нелегальных практик</li>
+        </ul>
+        <div class="faction-label">Убеждения</div>
+        <ul class="styled-list">
+          <li>Магия должна быть упорядочена</li>
+          <li>Необученный маг — угроза для всех</li>
+          <li>Знание — сила, но требует ответственности</li>
+        </ul>
+      </div>
+      <div>
+        <div class="faction-label">Ранги</div>
+        <ul class="rank-list">
+          <li>Ученик Коллегии (1)</li>
+          <li>Маг Коллегии (2)</li>
+          <li>Магистр (3)</li>
+          <li>Верховный Магистр (4)</li>
+          <li>Хранитель Магии (5)</li>
+        </ul>
+        <p style="font-size:0.8rem; color:var(--silver); margin-top:0.5rem;">Архимаги не входят в общую систему рангов</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chaos Followers -->
+  <div class="faction-card crimson" id="chaos-followers">
+    <div class="faction-name">🎭 Последователи Хаоса</div>
+    <div class="faction-desc">Террористическая организация, выросшая из группы жрецов Уртаса. Чаще всего позиционируют себя как цирковую труппу. Сюда часто вступают жрецы доменов войны, обмана и смерти, клятвопреступники, паладины клятвы покорения, плуты и колдуны.</div>
+
+    <div class="two-col">
+      <div>
+        <div class="faction-label">Цели</div>
+        <ul class="styled-list">
+          <li>Анархия (вроде той, что была в Эпоху Хаоса)</li>
+          <li>Освобождение богов Хаоса</li>
+          <li>Активная пропаганда своей идеологии</li>
+        </ul>
+        <div class="faction-label">Убеждения</div>
+        <ul class="styled-list">
+          <li>Истинное лицо Гартеневера — Эпоха Хаоса</li>
+          <li>Запечатывание Бездны является величайшей ошибкой</li>
+        </ul>
+      </div>
+      <div>
+        <div class="faction-label">Ранги</div>
+        <ul class="rank-list">
+          <li>Новичок труппы (1)</li>
+          <li>Акробат (2)</li>
+          <li>Иллюзионист (3)</li>
+          <li>Маэстро (4)</li>
+          <li>Шут (5)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Inquisition -->
+  <div class="faction-card" id="inquisition">
+    <div class="faction-name">⚖ Солмаринская Инквизиция</div>
+    <div class="faction-desc">Религиозная организация под прямым управлением верховных епископов Солмарина. Занимается вопросами еретичества и влияния других фракций на население Солмаринского государства.</div>
+
+    <div class="two-col">
+      <div>
+        <div class="faction-label">Цели</div>
+        <ul class="styled-list">
+          <li>Истребление еретиков</li>
+          <li>Контроль влияния других фракций</li>
+          <li>Распространение веры</li>
+        </ul>
+        <div class="faction-label">Черты членов</div>
+        <p style="font-size:0.9rem;color:var(--parchment-dark);">Все агенты носят белые одежды с символом организации на левом плече. Обычно передвигаются отрядами по 5–6 человек.</p>
+      </div>
+      <div>
+        <div class="faction-label">Ранги</div>
+        <ul class="rank-list">
+          <li>Младший наблюдатель (1)</li>
+          <li>Старший наблюдатель (2)</li>
+          <li>Младший инквизитор (3)</li>
+          <li>Старший инквизитор (4)</li>
+          <li>Вознесённый инквизитор (5)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ash Brotherhood -->
+  <div class="faction-card" id="ash-brotherhood">
+    <div class="faction-name">💀 Братство Пепла</div>
+    <div class="faction-desc">Воинский орден, выросший из объединения культов Сайларина и Ксармы. Ныне находится под прямым командованием Вестника Смерти — главы культа Ксармы.</div>
+
+    <div class="two-col">
+      <div>
+        <div class="faction-label">Цели</div>
+        <ul class="styled-list">
+          <li>Распространение веры</li>
+          <li>Служение Войне и Смерти</li>
+          <li>Переманивание воинов из Фоена и Верийского Ордена</li>
+        </ul>
+        <div class="faction-label">Убеждения</div>
+        <ul class="styled-list">
+          <li>Сайларин дарует отвагу и мастерство в бою, Ксарма учит принимать бренность плоти</li>
+          <li>Жертва во имя веры — высшая честь</li>
+          <li>Те, кто избегает битвы, будут забыты</li>
+        </ul>
+      </div>
+      <div>
+        <div class="faction-label">Ранги</div>
+        <ul class="rank-list">
+          <li>Ищущий Огонь (1)</li>
+          <li>Длань Битвы (2)</li>
+          <li>Хранитель Умирающих (3)</li>
+          <li>Мастер Пепла (4)</li>
+          <li>Глас Последнего Вздоха (5)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RELIGION -->
+<section class="section" id="religion">
+  <div class="chapter-header">
+    <div class="chapter-number">ГЛАВА 2 · КУЛЬТУРА</div>
+    <h1 class="chapter-title">Религия</h1>
+  </div>
+
+  <p>Религия в Гартеневере является важной частью жизни обычных людей. Первые Боги были порождениями Океана Хаоса, остальные же были созданы или рождены уже после возведения земли в Гартеневере.</p>
+
+  <table>
+    <thead><tr><th>Божество</th><th>Домен</th><th>Пантеон</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Аэтерион</strong>, бог света</td><td>Света</td><td><span class="badge badge-gold">Высший</span></td></tr>
+      <tr><td><strong>Оранон</strong>, бог неба</td><td>Порядка</td><td><span class="badge badge-gold">Высший</span></td></tr>
+      <tr><td><strong>Левианта</strong>, богиня моря</td><td>Бури</td><td><span class="badge badge-gold">Высший</span></td></tr>
+      <tr><td><strong>Сильверион</strong>, бог леса</td><td>Природы, Жизни</td><td><span class="badge badge-gold">Высший</span></td></tr>
+      <tr><td><strong>Тарвел</strong>, бог ремесла</td><td>Кузни</td><td><span class="badge badge-gold">Высший</span></td></tr>
+      <tr><td><strong>Лиэр</strong>, бог знаний</td><td>Магии, Знаний</td><td><span class="badge badge-gold">Высший</span></td></tr>
+      <tr><td><strong>Тиарен</strong>, бог правосудия</td><td>Мира</td><td><span class="badge badge-gold">Высший</span></td></tr>
+      <tr><td><strong>Уртас</strong>, бог монстров</td><td>Обмана</td><td><span class="badge badge-crimson">Хаоса</span></td></tr>
+      <tr><td><strong>Нирант</strong>, Бог Бездны</td><td>Сумерек</td><td><span class="badge badge-crimson">Хаоса</span></td></tr>
+      <tr><td><strong>Ксарма</strong>, богиня смерти</td><td>Смерти, Упокоения</td><td><span class="badge badge-crimson">Хаоса</span></td></tr>
+      <tr><td><strong>Сайларин</strong>, бог войны</td><td>Войны</td><td><span class="badge badge-crimson">Хаоса</span></td></tr>
+    </tbody>
+  </table>
+
+  <!-- HIGH PANTHEON -->
+  <h2 class="section-title" id="high-pantheon">Пантеон Высших Богов</h2>
+
+  <div class="note-block">
+    <div class="note-title">🏛 Небесный Град</div>
+    <p>Место проживания богов и их ангелов. Представляет собой небольшой город, разделённый на 7 частей по числу богов Высшего Пантеона. Хотя Небесный Град и не находится на другом плане существования, попасть в него можно лишь через скрытые врата, известные только небожителям. Смертные могут войти в город только с разрешения его жителей или богов.</p>
+  </div>
+
+  <div class="god-card">
+    <div class="god-name">⚡ Аэтерион</div>
+    <div class="god-epithet">Верховный свет · Покровитель Солмарина</div>
+    <p>Верховный бог всего Гартеневера, командуя остальными богами, он может влиять практически на весь мир. Последователям запрещается какое-либо взаимодействие с магией Хаоса (в том числе спуски в Бездну).</p>
+    <div class="faction-label">Небожители</div>
+    <ul class="rank-list"><li>Икар</li><li>Арго</li><li>Акрон</li></ul>
+  </div>
+
+  <div class="god-card">
+    <div class="god-name">🌪 Оранон</div>
+    <div class="god-epithet">Бог неба · Небесный Владыка</div>
+    <p>Младший брат Аэтериона, бог неба и покровитель домена Порядка. Своеобразный «мэр» Небесного Града. Как таковых заповедей у последователей нет, кроме поддержания порядка. Пользуется уважением даже среди Богов Хаоса.</p>
+    <div class="faction-label">Небожители</div>
+    <ul class="rank-list"><li>Алиот</li><li>Тания</li><li>Альдафирах</li></ul>
+  </div>
+
+  <div class="god-card">
+    <div class="god-name">🌊 Левианта</div>
+    <div class="god-epithet">Богиня моря · Покровительница моряков</div>
+    <p>Третья из старших богов, единственная сестра Аэтериона и Оранона. Покровительствует морякам, рыбакам и домену Бури. Заповеди запрещают неуважительное отношение к морю и его обитателям. Её культ — вторая по величине религия в мире.</p>
+    <div class="faction-label">Небожители</div>
+    <ul class="rank-list"><li>Индевор</li><li>Хайнд</li><li>Севра</li></ul>
+  </div>
+
+  <div class="god-card">
+    <div class="god-name">🌲 Сильверион</div>
+    <div class="god-epithet">Хранитель природы</div>
+    <p>Бог лесов и природы Гартеневера. Предпочитает оставаться в лесах Гартеневера, редко появляясь в Небесном Граде. Охотники часто оставляют ему часть добычи в качестве подношения.</p>
+    <div class="faction-label">Заповеди</div>
+    <ul class="styled-list">
+      <li>Если срубаешь дерево — попроси прощения у леса</li>
+      <li>Охотничьи кинжалы перед использованием должны быть окроплены росой</li>
+    </ul>
+    <div class="faction-label">Небожители</div>
+    <ul class="rank-list"><li>Вайран</li><li>Дракофиллум</li><li>Арбор</li></ul>
+  </div>
+
+  <div class="god-card">
+    <div class="god-name">🔨 Тарвел</div>
+    <div class="god-epithet">Небесный кузнец</div>
+    <p>Бог ремесла и кузни, покровитель мастеров и изобретателей. Особенно почитается теми, кто работает с инфузионной магией. Известен своей строгостью и считает Аэтериона слишком мягким. Говорят, именно он выковал цепи для наказания Уртаса и Ниранта.</p>
+    <div class="faction-label">Заповеди</div>
+    <ul class="styled-list"><li>Изделие должно быть качественным</li><li>Не бросай начатую работу</li></ul>
+    <div class="faction-label">Небожители</div>
+    <ul class="rank-list"><li>Негот</li><li>Феррар</li><li>Фриджитус</li></ul>
+  </div>
+
+  <div class="god-card">
+    <div class="god-name">📚 Лиэр</div>
+    <div class="god-epithet">Божество знаний</div>
+    <p>Покровитель волшебников, библиотекарей и учёных. Пятый бог по популярности. Нелюдим, живёт в Небесном городе, но редко выходит из библиотеки. Хорошие отношения с Ораноном.</p>
+    <div class="faction-label">Заповеди</div>
+    <ul class="styled-list"><li>Вечная учёба — ключ к сознанию</li><li>Книги — лучшие учителя</li></ul>
+    <div class="faction-label">Небожители</div>
+    <ul class="rank-list"><li>Фолиум</li><li>Аденин</li><li>Селен</li></ul>
+  </div>
+
+  <div class="god-card">
+    <div class="god-name">⚖ Тиарен</div>
+    <div class="god-epithet">Небесный судья · Брат Сайларина</div>
+    <p>Бог правосудия. Почитается судьями, инквизиторами и многими членами Верийского Ордена. Тиарен и его брат Сайларин когда-то были неразлучны, но после того, как Сайларин примкнул к Пантеону Хаоса, их отношения испортились. Тиарен до сих пор надеется вернуть брата.</p>
+    <div class="faction-label">Заповеди</div>
+    <ul class="styled-list"><li>Никогда не суди в гневе</li><li>Прежде чем обнажить меч — произнеси слово</li><li>Мир дороже победы</li></ul>
+    <div class="faction-label">Небожители</div>
+    <ul class="rank-list"><li>Сантентия</li><li>Аксер</li><li>Интердит</li></ul>
+  </div>
+
+  <!-- CHAOS PANTHEON -->
+  <h2 class="section-title" id="chaos-pantheon">Пантеон Хаоса</h2>
+
+  <p>Пантеон, возникший из тех, кто последовал за Уртасом во время бунта. Почитается теми, кого инквизиция называет «еретиками», в том числе фракцией Последователей Хаоса. Боги Хаоса не имеют точного места проживания.</p>
+
+  <div class="dm-block">
+    <div class="dm-title">🎲 Для DM</div>
+    <p>В зависимости от сюжета кампании вы можете свободно манипулировать ролью этого пантеона.</p>
+  </div>
+
+  <div class="god-card">
+    <div class="god-name">🐉 Уртас</div>
+    <div class="god-epithet">Драконий бог · Создатель монстров</div>
+    <p>Создатель всего ужасающего бестиария Гартеневера и покровитель домена Обмана. Один из самых младших богов, всегда любил идти против воли старших. Несмотря на то что Уртас скован, смертные всё ещё боятся его, и списывают террор монстров на гнев Уртаса.</p>
+  </div>
+
+  <div class="god-card">
+    <div class="god-name">🌑 Нирант</div>
+    <div class="god-epithet">Хранитель Бездны · Бог сумерек и границ</div>
+    <p>До бунта Нирант столетиями охранял единственный проход к Океану Хаоса. Его долгое изгнание на границе миров сделало его угрюмым и замкнутым. Когда Уртас предложил снять печать, Нирант не колебался — он верил, что магия Хаоса является инструментом, который боги просто боялись понять.</p>
+  </div>
+
+  <div class="god-card">
+    <div class="god-name">☠ Ксарма</div>
+    <div class="god-epithet">Богиня смерти</div>
+    <p>Олицетворение смерти в мире Гартеневера. В Эпоху Меча последовала за Уртасом из желания укрепить влияние своей религии. Во время Эпохи Хаоса культ Ксармы процветал, но после создания Солмаринского Государства и Инквизиции последователи были подвержены чистке.</p>
+  </div>
+
+  <div class="god-card">
+    <div class="god-name">⚔ Сайларин</div>
+    <div class="god-epithet">Воин Хаоса · Брат Тиарена</div>
+    <p>Брат Тиарена и божество войны в Гартеневере. Покровительствует всем воинам, что ещё не забыли искусство меча. Сайларин перешёл в Пантеон Хаоса, заявив, что война — это не порядок, а вечный конфликт и перемены. Его разрыв с Тиареном стал одной из величайших трагедий божественного мира.</p>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!--                   CHAPTER 3: COUNTRIES                   -->
+<!-- ======================================================= -->
+<div class="ornamental-divider">✦ ✦ ✦ ГЛАВА 3 ✦ ✦ ✦</div>
+
+<!-- VERIA -->
+<section class="section" id="veria">
+  <div class="chapter-header">
+    <div class="chapter-number">ГЛАВА 3 · СТРАНЫ</div>
+    <h1 class="chapter-title">Верийское Королевство</h1>
+  </div>
+
+  <p>Центральное королевство континента и по совместительству центр торговли и немагических исследований. Вот уже несколько веков тут правит человеческая династия <strong>Кенисвиллей</strong>.</p>
+
+  <div class="two-col">
+    <div class="info-box">
+      <div class="info-box-label">Правитель</div>
+      <p style="margin:0;font-size:0.9rem;color:var(--parchment-dark);"><strong>Лирон Кенисвилль</strong> — 11-й правитель. Среди простого люда его считают жестоким, но справедливым королём. Возобновил смертные казни.</p>
+    </div>
+    <div class="info-box">
+      <div class="info-box-label">Жизнь обычных людей</div>
+      <p style="margin:0;font-size:0.9rem;color:var(--parchment-dark);">Вторая по богатству страна в мире. Типичный житель может позволить себе <em>Комфортное существование</em>.</p>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">География Королевства</h3>
+  <p>Верийское королевство занимает центральную часть континента, между <strong>Хребтом Падших</strong> на юге и <strong>Морем Левианты</strong> на севере. Столица Валориан защищена с севера <strong>Ардиповым лесом</strong> — древним лесным массивом, где до сих пор бродят друиды Сильвериона. Главная река <strong>Арвессия</strong> течёт от гор через Валориан к морю.</p>
+
+  <div class="note-block">
+    <div class="note-title">ℹ Палата Путей и Торгов (ППТ)</div>
+    <p>Крупнейшая бюрократическая организация Верийского королевства, контролирующая торговые пути, сбор пошлин и регулирование перевозок. Основана в 256 году королём <strong>Геральдом Кенисвиллем</strong> для монополизации контроля над торговыми маршрутами между Доминионом и Солмарином.</p>
+  </div>
+
+  <!-- Cities -->
+  <div class="city-card" id="valorian">
+    <div class="city-header">
+      <div class="city-name">Валориан <span class="city-name-en">Valorian</span></div>
+      <span class="badge badge-gold">СТОЛИЦА</span>
+    </div>
+    <div class="city-body">
+      <div class="city-stats">
+        <div class="city-stat"><span class="city-stat-label">Население</span><span class="city-stat-value">~27 500 существ</span></div>
+        <div class="city-stat"><span class="city-stat-label">Расположение</span><span class="city-stat-value">Между Хребтом Падших и Ардиповым лесом</span></div>
+        <div class="city-stat"><span class="city-stat-label">Фракции</span><span class="city-stat-value">Верийский Орден, Церковь Оранона, Гильдия Исследователей, Коллегия Магии</span></div>
+      </div>
+      <p>Сердце практически всего континента. Именно здесь проходят встречи архимагов Айканарии и верховных епископов Солмарина. Один из самых защищённых городов из-за огромного количества рыцарей и агентов Верийского Ордена.</p>
+      <div class="faction-label">Ключевые локации</div>
+      <div class="location-item"><div class="location-name">Штаб Гильдии Исследователей</div><p>Массивное трёхэтажное здание из тёмного камня. Внутри вечное беспокойство: новички получают лицензии на спуск, опытные исследователи готовятся к поездке в Лагерь Искателей.</p></div>
+      <div class="location-item"><div class="location-name">Торговая Площадь</div><p>Площадь в центре города, где сотни торговцев ежедневно борются за деньги. Много рыцарей, проверяющих лицензии ППТ.</p></div>
+      <div class="location-item"><div class="location-name">Филиал Коллегии Магии</div><p>Здание на Торговой площади. Постоянное столпотворение людей, желающих получить разрешение на магию.</p></div>
+      <div class="location-item"><div class="location-name">Таверна «Глубины»</div><p>Выкрашенное в синий здание, принадлежащее Верийскому Ордену. Днём — обычная таверна, ночью — место обмена информацией и выдачи заданий Ордену.</p></div>
+      <div class="location-item"><div class="location-name">Верийская Академия Магии</div><p>Крупнейшая магическая академия королевства. Считается четвёртой по престижности академией в мире.</p></div>
+    </div>
+  </div>
+
+  <div class="city-card" id="blancalden">
+    <div class="city-header">
+      <div class="city-name">Бланкальден <span class="city-name-en">Blancalden</span></div>
+      <span class="badge badge-silver">ШАХТЁРСКИЙ ГОРОД</span>
+    </div>
+    <div class="city-body">
+      <div class="city-stats">
+        <div class="city-stat"><span class="city-stat-label">Население</span><span class="city-stat-value">~3 500 существ</span></div>
+        <div class="city-stat"><span class="city-stat-label">Расположение</span><span class="city-stat-value">Юг от Валориана, у подножия Хребта Падших</span></div>
+        <div class="city-stat"><span class="city-stat-label">Фракции</span><span class="city-stat-value">Культ Ниранта, Гильдия Исследователей Бездны</span></div>
+      </div>
+      <div class="location-item"><div class="location-name">Бланкальдская Шахта</div><p>Главная шахта города и одно из самых опасных мест Верийского королевства. Близость к Бездне приводит к утечкам магии Хаоса. Монстры регулярно атакуют шахтёров, но добыча продолжается — здешние мифрил, адамантит и драгоценные кристаллы слишком ценны. Считается идеальным тренировочным полигоном перед спуском в настоящую Бездну.</p></div>
+    </div>
+  </div>
+
+  <div class="city-card" id="itergon">
+    <div class="city-header">
+      <div class="city-name">Итергон <span class="city-name-en">Itergone</span></div>
+      <span class="badge badge-silver">ПОРТОВЫЙ ГОРОД</span>
+    </div>
+    <div class="city-body">
+      <div class="city-stats">
+        <div class="city-stat"><span class="city-stat-label">Население</span><span class="city-stat-value">~10 000 существ</span></div>
+        <div class="city-stat"><span class="city-stat-label">Расположение</span><span class="city-stat-value">Побережье Моря Левианты</span></div>
+        <div class="city-stat"><span class="city-stat-label">Фракции</span><span class="city-stat-value">ППТ, Церковь Левианты, Верийский Орден</span></div>
+      </div>
+      <p>Единственный крупный город у Моря Левианты — единственный крупный порт Верийского Королевства.</p>
+      <div class="location-item"><div class="location-name">Центральный офис ППТ</div><p>Здание, в котором моряки и торговцы получают разрешения на торговлю, вывоз и ввоз товаров.</p></div>
+      <div class="location-item"><div class="location-name">«Пиратская бухта»</div><p>Одна из старейших таверн всего Гартеневера. Аналог валорианской «Глубины» — днём для моряков, ночью — место встреч Верийского Ордена.</p></div>
+      <div class="location-item"><div class="location-name">Храм Левианты</div><p>Величественное здание на берегу. Моряки молятся здесь перед выходом в море и приносят дары после удачного возвращения.</p></div>
+    </div>
+  </div>
+
+  <div class="city-card" id="seekers-camp">
+    <div class="city-header">
+      <div class="city-name">Лагерь Искателей</div>
+      <span class="badge badge-purple">ОСОБАЯ ЗОНА</span>
+    </div>
+    <div class="city-body">
+      <div class="city-stats">
+        <div class="city-stat"><span class="city-stat-label">Население</span><span class="city-stat-value">Непостоянно</span></div>
+        <div class="city-stat"><span class="city-stat-label">Расположение</span><span class="city-stat-value">У самого входа в Бездну</span></div>
+        <div class="city-stat"><span class="city-stat-label">Фракции</span><span class="city-stat-value">Гильдия Исследователей Бездны</span></div>
+      </div>
+      <p>Небольшой торговый городок у инфузионных лифтов, спускающих Исследователей в глубины. Вход без соответствующей лицензии запрещён.</p>
+      <div class="location-item"><div class="location-name">Спуск</div><p>Два лифта, работающих на инфузионной магии. Из шахт иногда вылезают монстры Бездны.</p></div>
+      <div class="location-item"><div class="location-name">Пункт продажи</div><p>Лавка для тех, кто не смог продать артефакты в Андергрейве.</p></div>
+      <div class="location-item"><div class="location-name">Смотровая Терраса</div><p>Площадка у края Бездны. Нередко появляются имена погибших групп, выцарапанные в металлических перилах.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLMARIN -->
+<section class="section" id="solmarin-state">
+  <div class="chapter-header">
+    <div class="chapter-number">ГЛАВА 3 · СТРАНЫ</div>
+    <h1 class="chapter-title">Солмаринское Государство</h1>
+  </div>
+
+  <p>Теократическое государство на западе континента. Управляется тремя епископами, по одному от каждой церкви Старших Богов. Именно в Солмаринском Государстве была создана Инквизиция, истребляющая еретиков.</p>
+
+  <div class="card">
+    <div class="card-title">Верховные Епископы</div>
+    <table style="margin:0">
+      <thead><tr><th>Должность</th><th>Имя</th><th>Раса</th><th>Полномочия</th></tr></thead>
+      <tbody>
+        <tr><td>Епископ Аэтериона</td><td><strong>Шедин Тиммит</strong></td><td>Драконорождённый</td><td>Инквизиция и правоохранительная система</td></tr>
+        <tr><td>Епископ Левианты</td><td><strong>Анастрианна Амакир</strong></td><td>Эльфийка</td><td>Торговля с другими городами</td></tr>
+        <tr><td>Епископ Оранона</td><td><strong>Салазар Норикрон</strong></td><td>Человек</td><td>Власть в городах</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="dm-block">
+    <div class="dm-title">🎲 Для DM</div>
+    <p>Назначение драконорождённого Шединна на пост епископа Аэтериона вызвало споры в церкви. Некоторые считают это оскорблением, ведь драконорождённые созданы Уртасом. Но Шединн доказал свою веру, яростно искореняя культы Хаоса и становясь примером «спасения» даже для созданий Уртаса.</p>
+  </div>
+
+  <div class="two-col">
+    <div class="info-box">
+      <div class="info-box-label">Жизнь обычных людей</div>
+      <p style="margin:0;font-size:0.9rem;color:var(--parchment-dark);">Чаще всего <em>комфортное существование</em>. Жрецы и инквизиторы — <em>комфортное</em> или <em>богатое</em>.</p>
+    </div>
+    <div class="info-box">
+      <div class="info-box-label">Инквизиция</div>
+      <p style="margin:0;font-size:0.9rem;color:var(--parchment-dark);">По городам висят не только листовки розыска преступников, но и еретиков.</p>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">География</h3>
+  <p>Местность с частыми перепадами высот и лесами. На востоке — горы Оранона. На севере — выход к морю Левианты, на побережье которого построен святой град Солмарин — главный порт всего континента. Священный лес Сильвериона на северо-востоке — один из немногих безопасных проходов в Дикие Земли.</p>
+
+  <div class="city-card" id="solmarin-city">
+    <div class="city-header">
+      <div class="city-name">Солмарин</div>
+      <span class="badge badge-gold">СТОЛИЦА</span>
+    </div>
+    <div class="city-body">
+      <div class="city-stats">
+        <div class="city-stat"><span class="city-stat-label">Население</span><span class="city-stat-value">34 000 существ</span></div>
+        <div class="city-stat"><span class="city-stat-label">Районы</span><span class="city-stat-value">4 (по сторонам света)</span></div>
+        <div class="city-stat"><span class="city-stat-label">Тайные фракции</span><span class="city-stat-value">Последователи Хаоса (подпольная ячейка в Восточном районе)</span></div>
+      </div>
+
+      <h4 class="sub-subsection">Восточный район — Трущобы</h4>
+      <div class="location-item"><div class="location-name">Гильдия наёмников</div><p>Маленькое покосившееся здание с таверной и гильдией для заданий, противоречащих закону.</p></div>
+      <div class="location-item"><div class="location-name">Пепельная Площадь</div><p>Место казней. Солмаринская Инквизиция проводит здесь показательные убийства.</p></div>
+      <div class="location-item"><div class="location-name">Лазарет Святой Милости</div><p>Здание, куда ссылают существ, которым храмы не стали бы тратить время. Инквизиция подозревает нелегальные эксперименты, но игнорирует подозрения.</p></div>
+
+      <h4 class="sub-subsection">Южный район — Религиозный</h4>
+      <div class="location-item"><div class="location-name">Храмовый комплекс Высшего Пантеона</div><p>7 храмов, посвящённые богам Высшего Пантеона. Круглосуточная охрана инквизиторов.</p></div>
+      <div class="location-item"><div class="location-name">Фолиумский архив</div><p>Все религиозные и научные тексты, включая труды Монаха. Доступ с одобрения епископа.</p></div>
+      <div class="location-item"><div class="location-name">Дом Милосердия имени Арбора</div><p>Жрецы и маги лечат больных — в основном тех, кто может заплатить.</p></div>
+      <div class="location-item"><div class="location-name">Гнездо</div><p>База Солмаринской Инквизиции. Здесь тренируются жрецы и паладины, объявляются новые еретики.</p></div>
+
+      <h4 class="sub-subsection">Западный район — Жилой</h4>
+      <div class="location-item"><div class="location-name">Таверна «Кризалис»</div><p>Главная база Верийского Ордена в Солмаринском Государстве. Сюда стекается вся информация шпионов.</p></div>
+      <div class="location-item"><div class="location-name">Филиал Коллегии</div><p>Те же функции, что и другие филиалы.</p></div>
+
+      <h4 class="sub-subsection">Северный район — Портовый</h4>
+      <div class="location-item"><div class="location-name">Главная Гавань Солмарина</div><p>Крупнейший порт Гартеневера. Движение круглосуточное.</p></div>
+      <div class="location-item"><div class="location-name">Таверна «В чреве зверя»</div><p>Самое шумное место района. Драки и пьянки — норма. Отличная точка для слухов.</p></div>
+    </div>
+  </div>
+
+  <div class="city-card" id="luminar">
+    <div class="city-header">
+      <div class="city-name">Люминар</div>
+      <span class="badge badge-crimson">БАЗА ИНКВИЗИЦИИ</span>
+    </div>
+    <div class="city-body">
+      <div class="city-stats">
+        <div class="city-stat"><span class="city-stat-label">Население</span><span class="city-stat-value">23 000 существ</span></div>
+        <div class="city-stat"><span class="city-stat-label">Правитель</span><span class="city-stat-value">Верховный епископ Аэтериона</span></div>
+        <div class="city-stat"><span class="city-stat-label">Особенность</span><span class="city-stat-value">Большие магические окна — «нечего скрывать»</span></div>
+      </div>
+      <p>Целиком подчиняется Верховному Епископу Аэтериона. Практически весь город является одной большой базой Инквизиции.</p>
+      <div class="location-item"><div class="location-name">Эфирная Башня</div><p>Высокая белая башня с инфузионным механизмом наверху. Позволяет связываться с другими башнями по всему королевству.</p></div>
+      <div class="location-item"><div class="location-name">Дом Подготовки Младших Инквизиторов</div><p>Учебное заведение для молодых послушников. Богословие, расследования, боевая подготовка, допросы.</p></div>
+      <div class="location-item"><div class="location-name">Лаборатория Контролируемой Магии</div><p>Лучшие маги Солмарина проводят эксперименты с магией, выводя новые заклинания.</p></div>
+    </div>
+  </div>
+
+  <div class="city-card" id="sevra">
+    <div class="city-header">
+      <div class="city-name">Севра</div>
+      <span class="badge badge-silver">МЕСТО ПАЛОМНИЧЕСТВА</span>
+    </div>
+    <div class="city-body">
+      <div class="city-stats">
+        <div class="city-stat"><span class="city-stat-label">Население</span><span class="city-stat-value">9 000 существ</span></div>
+        <div class="city-stat"><span class="city-stat-label">Правитель</span><span class="city-stat-value">Наэлор Дипбрейд (тритон), Верховный жрец</span></div>
+        <div class="city-stat"><span class="city-stat-label">Особенность</span><span class="city-stat-value">Не подчиняется законам Солмарина</span></div>
+      </div>
+      <p>Отделённый от остального мира горами Оранона город — место паломничества для последователей Левианты. Расположен на высокой скале.</p>
+      <div class="location-item"><div class="location-name">Центральный храм Левианты</div><p>Огромное здание. Внутри множество реликвий, статуй и молящихся паломников.</p></div>
+      <div class="location-item"><div class="location-name">Дрейковые конюшни</div><p>Водные дрейки используются вместо лошадей.</p></div>
+      <div class="location-item"><div class="location-name">Драконий приют</div><p>Молодые водяные и медные драконы добровольно служат храму в обмен на еду и защиту. Помогают паломникам и переносят грузы.</p></div>
+    </div>
+  </div>
+
+  <div class="city-card" id="torfild">
+    <div class="city-header">
+      <div class="city-name">Торфилд и Корвус</div>
+    </div>
+    <div class="city-body">
+      <div class="two-col">
+        <div>
+          <strong style="color:var(--gold-light)">Торфилд</strong>
+          <p>Сельскохозяйственный центр государства. Снабжает Солмарин зерном и овощами. Население: ~8 000. Церковь Сильвериона.</p>
+        </div>
+        <div>
+          <strong style="color:var(--gold-light)">Корвус</strong>
+          <p>Небольшой город, окружённый со всех сторон горами Оранона. Основной аванпост Последователей Хаоса. Население: ~5 000.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AIKANARIA -->
+<section class="section" id="aikanaria">
+  <div class="chapter-header">
+    <div class="chapter-number">ГЛАВА 3 · СТРАНЫ</div>
+    <h1 class="chapter-title">Айканария</h1>
+  </div>
+
+  <p>Восточное королевство и магический центр всего Гартеневера. Несмотря на то что Айканария — самое молодое государство на континенте, по военной и магической мощи она не уступает даже клану Айканар и Верийскому королевству.</p>
+
+  <p><strong>Коллегия Магии</strong> контролирует использование волшебства на континенте. Управляет ей Архимаг школы Преобразования — грунг <strong>Такаэ</strong>, одна из самых противоречивых фигур в политике Гартеневера.</p>
+
+  <h3 class="subsection-title">Архимаги Айканарии</h3>
+  <table>
+    <thead><tr><th>Имя Архимага</th><th>Раса</th><th>Школа Магии</th></tr></thead>
+    <tbody class="archimage-row">
+      <tr class="archimage-row"><td><strong>Карден Тройн</strong></td><td>Дварф</td><td>Воплощение</td></tr>
+      <tr class="archimage-row"><td><strong>Селена Далевран</strong></td><td>Кенку</td><td>Вызов</td></tr>
+      <tr class="archimage-row"><td><strong>Арис Грейлон</strong></td><td>Человек</td><td>Прорицание</td></tr>
+      <tr class="archimage-row"><td><strong>Джеленнет Раяннес</strong></td><td>Эльф</td><td>Инфузия</td></tr>
+      <tr class="archimage-row"><td><strong>Вит</strong></td><td>Людоящер</td><td>Некромантия</td></tr>
+      <tr class="archimage-row"><td><strong>Цзян Такиноро</strong></td><td>Человек</td><td>Иллюзия</td></tr>
+      <tr class="archimage-row"><td><strong>Такаэ</strong></td><td>Грунг</td><td>Преобразование</td></tr>
+      <tr class="archimage-row"><td><strong>Левенд</strong></td><td>Табакси</td><td>Очарование</td></tr>
+      <tr class="archimage-row"><td><strong>Крулл Шеллорн</strong></td><td>Тортл</td><td>Ограждение</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note-block">
+    <div class="note-title">⚖ Совет Архимагов</div>
+    <p>Девять Архимагов собираются в Цитадели раз в месяц. Решения принимаются голосованием — минимум 5 голосов «за». Архимаг Воплощения имеет право решающего голоса в случае ничьей.</p>
+  </div>
+
+  <div class="note-block">
+    <div class="note-title">🏘 Жизнь обычных людей</div>
+    <p>Фермеры — <em>скромное или комфортное существование</em>. Жители городов — <em>комфортное</em>. Маги — <em>богатое или комфортное</em>. Многие зарегистрированы в Коллегии и знают полезные заговоры.</p>
+  </div>
+
+  <h3 class="subsection-title">География</h3>
+  <p>Территория покрыта большим количеством рек и озёр. На востоке и севере — горы Хребта Падших, за которыми начинаются Дикие Земли. Большая часть городов скрыта под кронами деревьев леса <strong>Лос-Вайран</strong>, занимающего почти треть территории Айканарии.</p>
+
+  <!-- Dominion -->
+  <div class="city-card" id="dominion">
+    <div class="city-header">
+      <div class="city-name">Доминион</div>
+      <span class="badge badge-purple">МАГИЧЕСКАЯ СТОЛИЦА</span>
+    </div>
+    <div class="city-body">
+      <div class="city-stats">
+        <div class="city-stat"><span class="city-stat-label">Население</span><span class="city-stat-value">38 000 существ</span></div>
+        <div class="city-stat"><span class="city-stat-label">Правитель</span><span class="city-stat-value">Архимаги</span></div>
+        <div class="city-stat"><span class="city-stat-label">Особенность</span><span class="city-stat-value">Тысячи шаров света вместо факелов</span></div>
+      </div>
+      <p>Город, выросший из первой магической академии Гартеневера. Ночью по городу плавают тысячи шаров света разных цветов. На площадях — студенты-волшебники и маги с магическими кругами. В Доминионе безопасно, атмосферно и уютно.</p>
+
+      <h4 class="sub-subsection">Магические Академии</h4>
+      <div class="location-item">
+        <div class="location-name">Академия имени Лирианны Куталион</div>
+        <p>Древнейшая и престижнейшая академия магии в Доминионе. Появилась после создания Айканарии. Нового директора всегда выбирает старый. Текущий директор — <strong>Гринде Кайнон</strong> (человек). Предпочтение школам Воплощения и Преобразования. Здесь обучался Раян Айканар, создавший Ковчег.</p>
+      </div>
+      <div class="location-item">
+        <div class="location-name">Академия «Крайфолл»</div>
+        <p>Менее престижная академия, где часто учатся выходцы из небогатых слоёв. Передаётся по наследству аристократической семьёй юань-ти <strong>Крайфоллов</strong>.</p>
+      </div>
+
+      <h4 class="sub-subsection">Таверны</h4>
+      <div class="location-item"><div class="location-name">«Пивной Компендиум»</div><p>Скорее бар с приглушённым магическим освещением. Бармен всегда выслушает и продаст информацию. Рядом с академией Куталион.</p></div>
+      <div class="location-item"><div class="location-name">«Дом Кэдрика»</div><p>Построена в бывшем доме Кэдрика Ворна. Небольшая библиотека и зона для чтения. На площади у входа в Цитадель.</p></div>
+      <div class="location-item"><div class="location-name">Чайная «Кипящий Омут»</div><p>Популярная чайная с лучшим чаем из Гримнеста. Любимое место архимага Иллюзии.</p></div>
+
+      <h4 class="sub-subsection">Здания Коллегии</h4>
+      <div class="location-item"><div class="location-name">Цитадель</div><p>Огромная высокая башня в сердце Доминиона. Здесь проходят заседания совета архимагов и находится центральный офис Коллегии Магии. Проводятся сложнейшие магические эксперименты.</p></div>
+
+      <h4 class="sub-subsection">Другие места</h4>
+      <div class="location-item"><div class="location-name">Переулок Катализаторов</div><p>Узкая улочка с запахом серы и благовоний. Десятки лавок с чернилами, бумагой, костями монстров и экспериментальными зельями. Студенты подрабатывают здесь.</p></div>
+    </div>
+  </div>
+
+  <!-- Foen -->
+  <div class="city-card" id="foen">
+    <div class="city-header">
+      <div class="city-name">Фоен</div>
+      <span class="badge badge-silver">СЕВЕРНЫЙ СТРАЖ</span>
+    </div>
+    <div class="city-body">
+      <div class="city-stats">
+        <div class="city-stat"><span class="city-stat-label">Население</span><span class="city-stat-value">14 000 существ</span></div>
+        <div class="city-stat"><span class="city-stat-label">Правитель</span><span class="city-stat-value">Мей Такиноро (человек)</span></div>
+        <div class="city-stat"><span class="city-stat-label">Фракции</span><span class="city-stat-value">Коллегия Магии, Верийский Орден</span></div>
+      </div>
+      <p>Один из древнейших городов континента, самый северный. Вырос из лагеря, спасённого Мастером. Третий по величине город Айканарии.</p>
+
+      <div class="note-block" style="margin:0.8rem 0;">
+        <div class="note-title">⚔ Семья Такиноро</div>
+        <p>Семья великих магов и воинов. Берут начало от самого Мастера. Считают своим долгом защищать его наследие и место его смерти. Цзян Такиноро — Архимаг Иллюзии, его сестра Мей — правитель Фоена.</p>
+      </div>
+
+      <div class="location-item"><div class="location-name">Воинское Училище Такиноро</div><p>Крепкое каменное здание рядом с имением семьи. Здесь, вдали от глаз Коллегии, обучают умирающему воинскому искусству — единственное такое заведение на континенте.</p></div>
+      <div class="location-item"><div class="location-name">Святилище Меча</div><p>Место смерти Мастера, скрытое в скале на севере города при помощи иллюзионной магии.</p></div>
+    </div>
+  </div>
+
+  <!-- Talmyris -->
+  <div class="city-card" id="talmyris">
+    <div class="city-header">
+      <div class="city-name">Талмирис</div>
+      <span class="badge badge-purple">МАГИЧЕСКИЙ ЦЕНТР</span>
+    </div>
+    <div class="city-body">
+      <div class="city-stats">
+        <div class="city-stat"><span class="city-stat-label">Население</span><span class="city-stat-value">24 000 жителей</span></div>
+        <div class="city-stat"><span class="city-stat-label">Правитель</span><span class="city-stat-value">Тибор Хеллдер (тортл)</span></div>
+        <div class="city-stat"><span class="city-stat-label">Знаменитость</span><span class="city-stat-value">Дайн Унгарт (дварф, защитник города)</span></div>
+      </div>
+
+      <div class="note-block" style="margin:0.8rem 0;">
+        <div class="note-title">📖 Дайн Унгарт</div>
+        <p>Чародей, которого многие считают величайшим магом, не состоящим в Совете. Долгое время скитался по миру, помогая простым людям и собирая труды Эмилиаса.</p>
+      </div>
+
+      <div class="location-item"><div class="location-name">Академия «Небула»</div><p>Третья по престижности магическая академия в Гартеневере. Общеобразовательная. Директор — <strong>Бран Брайтвуд</strong> (шифтер-олень).</p></div>
+      <div class="location-item"><div class="location-name">Око Айканарии</div><p>Исполинская линза диаметром 50 метров, парящая над центральной площадью на высоте 300 футов. Создана в 895 году Джеленнет Раяннес и Арисом Грейлоном. Днём создаёт радужный купол, ночью — голубоватое свечение. Под ней — закрытый Зал Звёздной Карты с 3D иллюзией всего континента.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- GRIMNEST -->
+<section class="section" id="grimnest">
+  <div class="chapter-header">
+    <div class="chapter-number">ГЛАВА 3 · СТРАНЫ</div>
+    <h1 class="chapter-title">Архипелаг Гримнест</h1>
+  </div>
+
+  <p>Архипелаг на северо-западе от континента, долгое время закрытый для других рас. В Эпоху Магии большей частью архипелага владеет клан Айканар — целых 4 острова. Оставшимся великим кланам достаются ещё 4 острова.</p>
+
+  <p>У эльфов нет привычки именовать города. Для эльфа город — это живой организм, неразрывно связанный с Кланом. На картах Гримнеста вы не найдёте названий городов — лишь обозначения владений.</p>
+
+  <h2 class="section-title" id="great-clans">Великие Кланы</h2>
+
+  <div class="faction-card">
+    <div class="faction-name" style="color:#b89fd4">🟣 Клан Айканар</div>
+    <div class="faction-desc">Величайший клан за всю историю эльфийского архипелага. Первооткрыватели магии, великие учёные, и в особенности инфузионисты.</div>
+    <div class="two-col">
+      <div class="info-box">
+        <div class="info-box-label">Столица (Кронлесс)</div>
+        <p style="margin:0;font-size:0.9rem;color:var(--parchment-dark);">Многоуровневый город среди ветвей многолетних деревьев. ~12 000 существ. Правитель: <strong>Крилл Айканар</strong>.</p>
+      </div>
+      <div class="info-box">
+        <div class="info-box-label">Порт (Аллмер)</div>
+        <p style="margin:0;font-size:0.9rem;color:var(--parchment-dark);">Второй по размерам порт среди эльфийских. ~13 000 существ. Правитель: <strong>Траний Айканар</strong>.</p>
+      </div>
+    </div>
+    <p style="margin-top:0.8rem;font-size:0.9rem;color:var(--parchment-dark);"><strong>Раяннесы</strong> — ветвь клана, основанная Иллирионом (братом Раяна Айканара). Их потомок <strong>Джеленнет Раяннес</strong> — нынешний Архимаг. До общественности доходят слухи о тайной связи с Ковчегом.</p>
+  </div>
+
+  <div class="faction-card">
+    <div class="faction-name" style="color:#d4aa7d">🟡 Клан Виларис</div>
+    <div class="faction-desc">Специализируются на мореплавании и торговле с континентом. Крупные сделки с аристократами Солмарина, ППТ.</div>
+    <p style="font-size:0.9rem;color:var(--parchment-dark);">Порт «Виларис» — крупнейший порт Гримнеста. ~8 000 существ. Правитель: Энна Виларис.</p>
+  </div>
+
+  <div class="faction-card">
+    <div class="faction-name" style="color:#d47070">🔴 Клан Амакир</div>
+    <div class="faction-desc">Специализируются на дипломатии и торговле. <strong>Анастрианна Амакир</strong> — епископ Левианты в Солмарине. В вечной вражде с кланом Куталион.</div>
+  </div>
+
+  <div class="faction-card">
+    <div class="faction-name" style="color:#7dc47d">🟢 Клан Куталион</div>
+    <div class="faction-desc">Потомки Лирианны Куталион, одной из основателей Доминиона. Славятся магами-иллюзионистами. Делят территорию одного острова с кланом Амакир.</div>
+  </div>
+
+  <div class="faction-card">
+    <div class="faction-name" style="color:#7da8d4">🔵 Клан Морвион</div>
+    <div class="faction-desc">Наиболее слабый из кланов. Имеют лишь 3 города и 2 острова. Самый большой их остров почти полностью заполнен горами и лесами, второй слишком мал для строительства.</div>
+  </div>
+</section>
+
+<!-- ARK -->
+<section class="section" id="ark">
+  <div class="chapter-header">
+    <div class="chapter-number">ГЛАВА 3 · СТРАНЫ</div>
+    <h1 class="chapter-title">Ковчег</h1>
+  </div>
+
+  <div class="quote-block">
+    <div class="quote-text">Я стоял на небольшом утёсе, что возвышался над Морем Левианты, в окружении около тридцати первокурсников Ковчега. Все мы смотрели на огромное сооружение, парящее над морем на высоте около пятисот метров. Остров. Ковчег.</div>
+    <div class="quote-attribution">Дневник Лорена Асторио</div>
+  </div>
+
+  <p>Величайшее инфузионное изобретение, передвигающееся над территорией Гартеневера. Ковчег — огромный остров (~4 кв. км), в основе которого лежат сложнейшие инфузии. Создан <strong>Раяном Айканаром</strong> и запущен в 430 году. На острове расположена крупнейшая и престижнейшая академия магии. Ковчег не принадлежит ни одному государству.</p>
+
+  <p>С земли Ковчег выглядит как парящий кусок земли, вокруг которого находится около тридцати обелиско-подобных механизмов, создающих поле, поддерживающее остров в воздухе.</p>
+
+  <div class="two-col">
+    <div class="info-box">
+      <div class="info-box-label">Директор Ковчега</div>
+      <p style="margin:0;font-size:0.9rem;color:var(--parchment-dark);"><strong>Илистар Раяннес</strong> — полуэльф, самый молодой потомок Аэриса Раяннес. Знает инфузионную магию, воплощение и вызов. Сын эльфа Нириана Айканара и человека Амафреи Джаффан.</p>
+    </div>
+    <div class="info-box">
+      <div class="info-box-label">Создание</div>
+      <p style="margin:0;font-size:0.9rem;color:var(--parchment-dark);">Работа началась в 387 году, заняла 43 года. В день первого полёта (430 г.) небо над Доминионом озарилось ярким светом. Это стало началом Поздней Эпохи Магии.</p>
+    </div>
+  </div>
+
+  <div class="note-block">
+    <div class="note-title">📅 Поступление</div>
+    <p>Учебный год начинается с началом зимы. Набор — с начала лета. Способы поступления:</p>
+    <ul class="styled-list">
+      <li><strong>Покупка места</strong> — самый простой, но доступный лишь богатым</li>
+      <li><strong>Экзамены</strong> — знание формул заклинаний или демонстрация двух рабочих инфузий</li>
+    </ul>
+  </div>
+
+  <div class="dm-block">
+    <div class="dm-title">🎲 Как попасть на Ковчег</div>
+    <p><strong>Во время спуска:</strong> Ковчег приземляется на специальной площадке в Доминионе на неделю в начале учебного года. Также спускается на Праздник Миграции дракочерепах в одном из портовых городов.</p>
+    <p><strong>Летающие корабли:</strong> Несколько инфузионных кораблей периодически спускаются за припасами. Попасть на борт — только с разрешением.</p>
+  </div>
+
+  <h3 class="subsection-title">Ключевые Локации Ковчега</h3>
+  <div class="location-item"><div class="location-name">Небесные Террасы</div><p>Жилой район для студентов и преподавателей. Дома на разных уровнях, соединённые мостами и левитирующими платформами.</p></div>
+  <div class="location-item"><div class="location-name">Архив Раяна</div><p>Одна из крупнейших библиотек, посвящённых магии. Хранит оригинальные чертежи Ковчега, труды Раяна и редчайшие манускрипты.</p></div>
+  <div class="location-item"><div class="location-name">Врата</div><p>Платформа на краю острова, откуда отправляются летающие корабли и механические птицы на континент.</p></div>
+  <div class="location-item"><div class="location-name">Кройвейнские Лаборатории</div><p>Названы в честь профессора Верена Кройвейна. Большой лабиринт коридоров с аудиториями и лабораториями.</p></div>
+
+  <div class="note-block">
+    <div class="note-title">🐢 Праздник Миграции</div>
+    <p>Раз в год, в середине осени, гигантские дракочерепахи мигрируют через Море Левианты. Ковчег традиционно спускается в один из портовых городов (обычно Солмарин, Итергон или Розенсторм), чтобы студенты и жители наблюдали миграцию вместе. Один из самых важных праздников года.</p>
+  </div>
+</section>
+
+<!-- WILD LANDS -->
+<section class="section" id="wild-lands">
+  <h2 class="section-title">Дикие Земли</h2>
+  <p>За Хребтом Падших начинаются бесконечные земли, что зовутся Дикими. Там нет известных городов или хоть какой-то цивилизации. Никто не лезет в Дикие Земли: переход Хребта считается слишком опасным, а на границе Леса Сильвериона и Диких Земель находится святыня природного бога, охраняемая друидами.</p>
+
+  <p>Редкие путешественники рассказывают о руинах древних цивилизаций, гигантских монстрах и магии, работающей не так, как в Гартеневере. Большинство экспедиций не возвращается.</p>
+
+  <div class="note-block">
+    <div class="note-title">🐉 Колыбель</div>
+    <p>Примерно в 300 км от границы с Лесом Сильвериона находится огромное драконье гнездо. Дракочерепахи, тараски, дрейки, виверны, обычные драконы и несколько Великих Вирмов. Многие не верят в существование этого места.</p>
+  </div>
+
+  <div class="dm-block">
+    <div class="dm-title">🎲 Для DM</div>
+    <p>Дикие Земли — чистый лист для вашей кампании. Здесь может быть всё что угодно: древние империи, забытые боги, порталы в другие миры, или просто бесконечные леса, полные опасностей. Используйте это пространство для своих идей!</p>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!--                    CHAPTER 4: ABYSS                      -->
+<!-- ======================================================= -->
+<div class="ornamental-divider">✦ ✦ ✦ ГЛАВА 4 ✦ ✦ ✦</div>
+
+<section class="section" id="abyss">
+  <div class="chapter-header">
+    <div class="chapter-number">ГЛАВА 4 · БЕЗДНА</div>
+    <h1 class="chapter-title">Бездна</h1>
+  </div>
+
+  <div class="quote-block">
+    <div class="quote-text">Добро пожаловать в Гильдию Исследователей Бездны. Вот ваша лицензия. Вот ваш ранг. Вот список снаряжения, которое мы рекомендуем. А вот статистика: из десяти новичков, спустившихся впервые, возвращаются меньше половины. Удачного выживания.</div>
+    <div class="quote-attribution">Стандартное приветствие Гильдии</div>
+  </div>
+
+  <p>Бездна — это система пещер, туннелей, гигантских полостей и подземных пустошей, уходящих на километры вглубь земли. На её дне, за печатью Эмилиаса Айканара, плещется океан первородного Хаоса — источник всей магии мира. Без лицензии Гильдии спуск незаконен.</p>
+
+  <div class="card purple">
+    <div class="card-title">📋 Список Слоёв и Зон</div>
+    <div class="two-col">
+      <div>
+        <p><strong style="color:#9b7fd4">Первый слой (500–1000м)</strong></p>
+        <ul class="styled-list"><li>Гнездо Восставших</li><li>Тропы реликтовых ленивцев</li><li>Ржавый форпост</li></ul>
+        <p><strong style="color:#9b7fd4">Второй слой (1000–2000м)</strong></p>
+        <ul class="styled-list"><li>Андергрейв <span class="badge badge-purple">Уникальная</span></li><li>Место Рождения <span class="badge badge-purple">Уникальная</span></li></ul>
+        <p><strong style="color:#9b7fd4">Третий слой (2000–3500м)</strong></p>
+        <ul class="styled-list"><li>Кристальные глубины</li><li>Улей мимиков</li><li>Лес невидимых</li></ul>
+      </div>
+      <div>
+        <p><strong style="color:#9b7fd4">Четвёртый слой (3500–5500м)</strong></p>
+        <ul class="styled-list"><li>Артерии Бездны</li><li>Сад Мертвецов</li><li>Врата из плоти</li></ul>
+        <p><strong style="color:#9b7fd4">Пятый слой (5500–8000м)</strong></p>
+        <ul class="styled-list"><li>Поле падших <span class="badge badge-purple">Уникальная</span></li><li>Скайлийские руины <span class="badge badge-purple">Уникальная</span></li></ul>
+        <p><strong style="color:#9b7fd4">Шестой слой (8000–10000м)</strong></p>
+        <ul class="styled-list"><li>Все зоны выше кроме уникальных — смешаны и искажены</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFECTION -->
+<section class="section" id="infection">
+  <h2 class="section-title">Очки Заражения</h2>
+  <p>Начиная с <strong>Третьего слоя</strong>, проводя длинный отдых вне Стабильной Зоны, персонажи обязаны пройти спасбросок Харизмы.</p>
+
+  <table>
+    <thead><tr><th>Слой</th><th>СЛ спасброска</th><th>Очки за провал</th></tr></thead>
+    <tbody>
+      <tr class="infection-table"><td>Третий слой</td><td>10</td><td>1</td></tr>
+      <tr class="infection-table"><td>Четвёртый слой</td><td>12</td><td>2</td></tr>
+      <tr class="infection-table"><td>Пятый слой</td><td>15</td><td>3</td></tr>
+      <tr class="infection-table"><td>Шестой слой</td><td>18</td><td>4</td></tr>
+    </tbody>
+  </table>
+
+  <table>
+    <thead><tr><th>Очки</th><th>Эффект</th></tr></thead>
+    <tbody>
+      <tr><td><strong style="color:var(--gold)">5</strong></td><td>Косметическая мутация (Таблица 1)</td></tr>
+      <tr><td><strong style="color:#e8a000">10</strong></td><td>Малая мутация (Таблица 2)</td></tr>
+      <tr><td><strong style="color:#d47070">15</strong></td><td>Серьёзная мутация (Таблица 3)</td></tr>
+      <tr><td><strong style="color:var(--crimson)">20</strong></td><td>Критическая мутация (Таблица 4)</td></tr>
+      <tr><td><strong style="color:#800">25+</strong></td><td>Мгновенное превращение в агрессивного монстра (Смерть)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="mutation-grid">
+    <div class="note-block">
+      <div class="note-title">Таблица 1 — Косметические мутации (d8)</div>
+      <table class="trait-table" style="margin:0">
+        <tbody>
+          <tr><td>1</td><td>Глаза меняют цвет (фиолетовый, чёрный, светящийся)</td></tr>
+          <tr><td>2</td><td>Кожа приобретает странный оттенок или текстуру</td></tr>
+          <tr><td>3</td><td>Волосы седеют, выпадают или меняют цвет</td></tr>
+          <tr><td>4</td><td>Появляются мелкие наросты (чешуйки, бугорки)</td></tr>
+          <tr><td>5</td><td>Голос становится глуше или приобретает эхо</td></tr>
+          <tr><td>6</td><td>Тень движется независимо</td></tr>
+          <tr><td>7</td><td>Запах тела меняется (сера, озон, гниль)</td></tr>
+          <tr><td>8</td><td>Кровь становится тёмной или светящейся</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note-block">
+      <div class="note-title">Таблица 2 — Малые мутации (d4)</div>
+      <table class="trait-table" style="margin:0">
+        <tbody>
+          <tr><td>1</td><td><strong>Острое обоняние</strong> — преимущество на Восприятие (запах)</td></tr>
+          <tr><td>2</td><td><strong>Ночные глаза</strong> — тёмное зрение 60фт, чувствительность к яркому свету</td></tr>
+          <tr><td>3</td><td><strong>Плотная кожа</strong> — +1 КД без брони, −10фт скорости</td></tr>
+          <tr><td>4</td><td><strong>Гибкие суставы</strong> — преимущество на Акробатику, −2 на Силу</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="note-block">
+    <div class="note-title">Таблица 3 — Серьёзные мутации (d6) — исчезают ниже 10 очков</div>
+    <table class="trait-table" style="margin:0">
+      <tbody>
+        <tr><td>1</td><td><strong>Истощение плоти</strong> — макс. хиты снижаются на уровень персонажа</td></tr>
+        <tr><td>2</td><td><strong>Нестабильная концентрация</strong> — помеха на спасброски Концентрации</td></tr>
+        <tr><td>3</td><td><strong>Слабость к свету</strong> — 1d4 урона в начале хода на ярком свету</td></tr>
+        <tr><td>4</td><td><strong>Онемение</strong> — помеха на спасброски Ловкости</td></tr>
+        <tr><td>5</td><td><strong>Отторжение магии</strong> — зелья лечения работают в 2 раза хуже</td></tr>
+        <tr><td>6</td><td><strong>Чужеродная аура</strong> — животные враждебны, помеха на Уход за Животными</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note-block">
+    <div class="note-title">Таблица 4 — Критические мутации (d6) — исчезают ниже 15 очков</div>
+    <table class="trait-table" style="margin:0">
+      <tbody>
+        <tr><td>1</td><td><strong>Распад тела</strong> — макс. хиты снижаются вдвое</td></tr>
+        <tr><td>2</td><td><strong>Голоса Хаоса</strong> — спасбросок Мудрости СЛ13 в начале хода. Провал — рукопашная атака по случайному существу (тратя Реакцию)</td></tr>
+        <tr><td>3</td><td><strong>Отторжение жизни</strong> — зелья и магия лечения не работают</td></tr>
+        <tr><td>4</td><td><strong>Связь с Бездной</strong> — существа Бездны чувствуют вас на расстоянии 300 фт</td></tr>
+        <tr><td>5</td><td><strong>Угасание воли</strong> — помеха на все спасброски Мудрости и Харизмы</td></tr>
+        <tr><td>6</td><td><strong>Предвестник перерождения</strong> — при провале спасброска от смерти: +1 очко заражения</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note-block">
+    <div class="note-title">ℹ Как работает накопление</div>
+    <p>Дебаффы накапливаются, а не заменяют друг друга. Пример: персонаж с 12 очками имеет косметическую мутацию, малый дебафф и серьёзный дебафф. При снижении до 8 очков серьёзный дебафф исчезает, остальные остаются.</p>
+  </div>
+
+  <h3 class="subsection-title">Очищение от Заражения</h3>
+  <table>
+    <thead><tr><th>Метод</th><th>Эффект</th></tr></thead>
+    <tbody>
+      <tr><td>Длинный отдых в стабильной зоне</td><td>−1 очко</td></tr>
+      <tr><td>Длинный отдых в Андергрейве</td><td>−2 очка</td></tr>
+      <tr><td>Длинный отдых на поверхности</td><td>−3 очка</td></tr>
+      <tr><td>Высшее Восстановление</td><td>−5 очков</td></tr>
+      <tr><td>Ритуал очищения (храм Высших Богов)</td><td>Сброс до 0 (требует пожертвование)</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- RELICTS -->
+<section class="section" id="relicts">
+  <h2 class="section-title">Реликты и Артефакты</h2>
+
+  <div class="two-col">
+    <div class="info-box">
+      <div class="info-box-label">Реликты</div>
+      <p style="margin:0;font-size:0.9rem;color:var(--parchment-dark);">Природные образования Бездны — кристаллы, окаменелости, минералы, пропитанные Хаосом. Используются как ядра для инфузионных механизмов. Встречаются на всех слоях.</p>
+    </div>
+    <div class="info-box">
+      <div class="info-box-label">Артефакты</div>
+      <p style="margin:0;font-size:0.9rem;color:var(--parchment-dark);">Предметы исследователей, изменённые Бездной. Брошенная бутылка становится зельем. Сломанный меч обретает магическую силу. Чем глубже — тем сильнее трансформация.</p>
+    </div>
+  </div>
+
+  <table>
+    <thead><tr><th>Слой</th><th>Редкость артефактов</th></tr></thead>
+    <tbody>
+      <tr><td>Первый</td><td>Артефакты не формируются</td></tr>
+      <tr><td>Второй</td><td>Обычные</td></tr>
+      <tr><td>Третий</td><td>Необычные</td></tr>
+      <tr><td>Четвёртый</td><td>Редкие</td></tr>
+      <tr><td>Пятый</td><td>Очень редкие</td></tr>
+      <tr><td>Шестой</td><td>Легендарные</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note-block">
+    <div class="note-title">🔍 Поиск реликтов и артефактов</div>
+    <p><strong>Реликты:</strong> Проверка Выживания или Расследования. СЛ = 10 + номер слоя. Успех = 1d4 реликтов за 4 часа поиска.</p>
+    <p><strong>Артефакты:</strong> Только в особых местах или при критическом успехе (натуральная 20).</p>
+  </div>
+
+  <div class="dm-block">
+    <div class="dm-title">🎲 Для DM: Время формирования</div>
+    <table style="margin:0.5rem 0">
+      <tbody>
+        <tr><td>Обычный</td><td>1–2 недели</td></tr>
+        <tr><td>Необычный</td><td>1–3 месяца</td></tr>
+        <tr><td>Редкий</td><td>6–12 месяцев</td></tr>
+        <tr><td>Очень редкий</td><td>1–5 лет</td></tr>
+        <tr><td>Легендарный</td><td>Десятилетия</td></tr>
+      </tbody>
+    </table>
+    <p>Это объясняет, почему нельзя просто бросить мешок мечей на шестом слое и вернуться за легендарным оружием.</p>
+  </div>
+</section>
+
+<!-- STABLE ZONES -->
+<section class="section" id="stable-zones">
+  <h2 class="section-title">Стабильные Зоны</h2>
+  <p>Зоны, в которых существа не получают заражение Хаосом. К ним относятся все зоны из списка, кроме шестого слоя.</p>
+</section>
+
+<section class="section" id="abyss-layers">
+  <h2 class="section-title">Слои Бездны</h2>
+
+  <div class="layer-card">
+    <div class="layer-header">
+      <div class="layer-num">I</div>
+      <div class="layer-title-block">
+        <div class="layer-name">Первый Слой</div>
+        <div class="layer-depth">500–1 000 м</div>
+      </div>
+      <span class="badge badge-gold">БЕЗ ЗАРАЖЕНИЯ</span>
+    </div>
+    <div class="layer-body">
+      <p>Наименее опасный слой. Факелы работают, воздух пригоден для дыхания, большинство существ избегают исследователей. Новички тренируются здесь.</p>
+      <div class="location-item"><div class="location-name">Гнездо Восставших</div><p>Стабильная зона, где <em>Сердце</em> превращает погибших в нежить. Восставшие не покидают территорию и атакуют только при приближении к Сердцу.</p></div>
+      <div class="location-item"><div class="location-name">Тропы Реликтовых Ленивцев</div><p>Прямые туннели, прокопанные гигантскими существами. Удобны для исследователей, но потревоженный ленивец — несколько тонн ярости в замкнутом пространстве.</p></div>
+      <div class="location-item"><div class="location-name">Ржавый Форпост</div><p>Заброшенное здание Гильдии. Ныне логово Тварей Бездны. Внутри остались старые припасы и записи экспедиций.</p></div>
+    </div>
+  </div>
+
+  <div class="layer-card">
+    <div class="layer-header">
+      <div class="layer-num">II</div>
+      <div class="layer-title-block">
+        <div class="layer-name">Второй Слой</div>
+        <div class="layer-depth">1 000–2 000 м</div>
+      </div>
+      <span class="badge badge-gold">БЕЗ ЗАРАЖЕНИЯ</span>
+    </div>
+    <div class="layer-body">
+      <p>Перевалочный пункт и последний шанс повернуть назад. Воздух тяжелее, свет тусклее, существа крупнее и агрессивнее. Здесь находится Андергрейв.</p>
+
+      <div class="location-item">
+        <div class="location-name">Андергрейв</div>
+        <div class="note-block" style="margin:0.5rem 0;">
+          <div class="city-stats" style="margin-bottom:0.8rem;">
+            <div class="city-stat"><span class="city-stat-label">Население</span><span class="city-stat-value">~1 500 постоянных жителей</span></div>
+            <div class="city-stat"><span class="city-stat-label">Правитель</span><span class="city-stat-value">Гильдия Исследователей Бездны</span></div>
+            <div class="city-stat"><span class="city-stat-label">Тайные фракции</span><span class="city-stat-value">Культ Ниранта</span></div>
+          </div>
+        </div>
+        <p>Единственный постоянный город в Бездне. Построен дварфами в Эпоху Хаоса. Последний оплот цивилизации перед настоящими глубинами.</p>
+        <div class="location-item" style="border-bottom:none; margin-bottom:0;"><div class="location-name">Торговый квартал</div><p>Множество лавок с нужным снаряжением для спусков.</p></div>
+        <div class="location-item" style="border-bottom:none; margin-bottom:0;"><div class="location-name">Пункт сбыта реликтов</div><p>Можно продать найденные в глубинах артефакты и реликты.</p></div>
+        <div class="location-item" style="border-bottom:none; margin-bottom:0;"><div class="location-name">Таверна «Зов Глубин»</div><p>Одна из старейших таверн Гартеневера. Собственность дварфийской семьи Грондальвир — одних из основателей Андергрейва.</p></div>
+        <div class="location-item" style="border-bottom:none;"><div class="location-name">Доска Потерянных</div><p>Стена с именами тех, кто не вернулся. Иногда записки забирают.</p></div>
+      </div>
+
+      <div class="location-item"><div class="location-name">Место Рождения</div><p>Огромный столб чёрного дыма из разлома. Здесь Нирант создал первых скайлийцев — и здесь до сих пор рождаются аберрации. Появляются случайно — от раза в неделю до нескольких в день.</p></div>
+    </div>
+  </div>
+
+  <div class="layer-card">
+    <div class="layer-header">
+      <div class="layer-num">III</div>
+      <div class="layer-title-block">
+        <div class="layer-name">Третий Слой</div>
+        <div class="layer-depth">2 000–3 500 м</div>
+      </div>
+      <span class="badge badge-crimson">СЛ 10 · +1 очко</span>
+    </div>
+    <div class="layer-body">
+      <p>Точка невозврата для новичков. Здесь начинается заражение Хаосом, магия нестабильна, существа не убегают от факелов.</p>
+      <div class="location-item"><div class="location-name">Кристальные Глубины</div><p>Пещеры с кристаллами, растущими как растения. Некоторые считают всю зону одним огромным организмом. Кристаллы реагируют на магию, тепло и движение. Часто прячутся монстры.</p></div>
+      <div class="location-item"><div class="location-name">Улей Мимиков</div><p>Иногда встречаются небольшие палатки с припасами. Возможно, что-то из этого настоящее, хотя большая часть — мимики.</p></div>
+      <div class="location-item"><div class="location-name">Лес Невидимых</div><p>Хвойный лес, любимое место для отдыха. Населён Ускользающими Зверями. Бдительность обязательна.</p></div>
+    </div>
+  </div>
+
+  <div class="layer-card">
+    <div class="layer-header">
+      <div class="layer-num">IV</div>
+      <div class="layer-title-block">
+        <div class="layer-name">Четвёртый Слой</div>
+        <div class="layer-depth">3 500–5 500 м</div>
+      </div>
+      <span class="badge badge-crimson">СЛ 12 · +2 очка</span>
+    </div>
+    <div class="layer-body">
+      <p>Четвёртый слой — живой. Не метафора. Стены пульсируют, туннели сжимаются и расширяются, Бездна будто дышит.</p>
+      <div class="location-item"><div class="location-name">Артерии Бездны</div><p>Туннели со стенами из мяса и стекающей крови. Обитает Слизь опасностью от 2.</p></div>
+      <div class="location-item"><div class="location-name">Врата из Плоти</div><p>Живые врата, закрывающие проходы. В центре каждых — рот с языком в 10 метров. Хищны, но предсказуемы: принеси жертву (живое существо) — откроются. Самые крупные стоят на входе в Пятый слой.</p></div>
+      <div class="location-item"><div class="location-name">Сад Мертвецов</div><p>Тела погибших исследователей не гниют — магия Хаоса сохраняет их. Место тихое и почти безопасное. Некоторые приходят попрощаться с товарищами или забрать снаряжение.</p></div>
+    </div>
+  </div>
+
+  <div class="layer-card">
+    <div class="layer-header">
+      <div class="layer-num">V</div>
+      <div class="layer-title-block">
+        <div class="layer-name">Пятый Слой</div>
+        <div class="layer-depth">5 500–8 000 м</div>
+      </div>
+      <span class="badge badge-crimson">СЛ 15 · +3 очка</span>
+    </div>
+    <div class="layer-body">
+      <p>Место, где началась война скайлийцев с Мастером. Время и пространство нестабильны.</p>
+      <div class="location-item"><div class="location-name">Поле Падших</div><p>Бескрайняя пещера, усеянная костями. Первое сражение со скайлийцами. Духи скайлийцев бродят среди костей — всё ещё готовятся к битве, завершившейся тысячу лет назад.</p></div>
+      <div class="location-item"><div class="location-name">Скайлийские Руины</div><p>Руины города скайлийцев. Пуст уже тысячу лет, но стены стоят и механизмы работают. Архитектура чужда — двери слишком высокие, лестницы слишком крутые. Стабильная зона — древняя магия защищает от Хаоса. В центре — запечатанный храм Ниранта, который никто ещё не открыл.</p></div>
+    </div>
+  </div>
+
+  <div class="layer-card">
+    <div class="layer-header">
+      <div class="layer-num">VI</div>
+      <div class="layer-title-block">
+        <div class="layer-name">Шестой Слой</div>
+        <div class="layer-depth">8 000–10 000 м</div>
+      </div>
+      <span class="badge badge-crimson">СЛ 18 · +4 очка</span>
+    </div>
+    <div class="layer-body">
+      <div class="quote-block" style="margin:0 0 1rem;">
+        <div class="quote-text">На шестом слое нет правил. Нет верха и низа. Нет времени. Есть только Хаос — и ты, пытающийся не раствориться в нём.</div>
+        <div class="quote-attribution">Последняя запись экспедиции «Предел», 912 г. Э.М.</div>
+      </div>
+      <p>Дно Бездны. Магия Хаоса настолько концентрирована, что реальность становится предложением. Знакомые зоны появляются и исчезают. <strong>Стабильные зоны не действуют.</strong> Заражение всё равно начисляется.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!--                   CHAPTER 5: CHARACTER                   -->
+<!-- ======================================================= -->
+<div class="ornamental-divider">✦ ✦ ✦ ГЛАВА 5 ✦ ✦ ✦</div>
+
+<section class="section" id="classes">
+  <div class="chapter-header">
+    <div class="chapter-number">ГЛАВА 5 · СОЗДАНИЕ ПЕРСОНАЖА</div>
+    <h1 class="chapter-title">Классы</h1>
+  </div>
+
+  <p>Создавая персонажа в Гартеневере помните о том, что его класс и раса напрямую влияют на отношение персонажей Мастера к вам.</p>
+
+  <!-- MAGE SCHOLARS -->
+  <h2 class="section-title" id="mage-scholars">Маги-учёные</h2>
+  <p><em>Классы: Чародей, Волшебник, Изобретатель</em></p>
+  <p>В реалиях Гартеневера, где магическая наука главенствует над всем остальным, эта группа классов считается наиболее уважаемой. Для обычного жителя разница между волшебником и чародеем неочевидна: оба творят заклинания, оба опасны. Коллегия Магии регулирует всех троих одинаково.</p>
+
+  <div class="card">
+    <div class="card-title">Волшебники</div>
+    <p>Истинные наследники магической традиции Гартеневера. Путь начинается с академии. Они лучше всего вписываются в структуру Коллегии — их обучение структурировано и задокументировано.</p>
+    <div class="note-block" style="margin:0.8rem 0 0;">
+      <div class="note-title">⚠ Некромантия в Гартеневере</div>
+      <p>Школа легальна (Архимаг Некромантии существует). Поднятие нежити требует специального разрешения Коллегии. В Солмарине некроманты автоматически под наблюдением Инквизиции. Многие называют себя «специалистами по изучению смерти».</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Изобретатели</div>
+    <p>Их искусство — Инфузионная школа — самая молодая из девяти (216 г. Э.М.). Именно изобретатели создали Ковчег, Око Айканарии и множество чудес. Выпускники работают над городской инфраструктурой: лифты Бездны, Эфирные башни связи. Ковчег формально не подчиняется Коллегии, но это не освобождает изобретателей от законов на континенте.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Чародеи</div>
+    <p>Самая противоречивая группа. Их сила не изучена в академии — она течёт в крови. В мире, где магия считается наукой, чародеи — аномалия. Многие проходят систему академий и становятся именитыми магами (Дайн Унгарт, Бран Брайтвуд). Нестабильные чародеи с Дикой магией — особая тема для Коллегии.</p>
+    <div class="dm-block" style="margin:0.8rem 0 0;">
+      <div class="dm-title">🎲 «Меры Сдерживания»</div>
+      <p>Что происходит с нестабильными чародеями, официально не разглашается. Слухи варьируются от «специальные школы» до «тихое устранение». В Солмарине чародеев с Дикой магией нередко вызывают на «беседу» с Инквизицией.</p>
+    </div>
+  </div>
+
+  <!-- FADING ART -->
+  <h2 class="section-title" id="fading-art">Угасающее Искусство</h2>
+  <p><em>Классы: Воин, Монах, Плут, Варвар</em></p>
+  <p>В Эпоху Богов Мастер разрубил скалу одним ударом. Сегодня это наследие угасает. Воинское искусство стало анахронизмом: зачем оттачивать технику меча, если волшебник испепелит тебя одним жестом?</p>
+
+  <div class="card">
+    <div class="card-title">Воины</div>
+    <p>Вымирающий вид. Одиночные места обучения: <strong>Училище Такиноро</strong> в Фоене (открыто) и тайные лагеря <strong>Верийского Ордена</strong>. Меч не оставляет магических следов — воин невидим для магических систем обнаружения. Идеальный агент для деликатных операций.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Монахи</div>
+    <p>Эпоха Магии опустошила монастыри. Осталось лишь несколько жалких монастырей с менее чем пятью сотнями существ. Многие монахи выдают техники Ци за магию, проходя в ряды магических рыцарей. При храмах Оранона в Солмарине служат существа, называющие себя монахами, но боевые техники они давно забыли.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Плуты</div>
+    <p>Прекрасно адаптировавшийся вид. Магия изменила мир, но не человеческую природу. Люди по-прежнему лгут, воруют, шпионят и убивают. Многие работают в Верийском Ордене или на контрабандистов.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Варвары</div>
+    <p>Единственный класс из группы, который не «угасает» — он никогда и не зажигался в глазах цивилизации. Происхождение: Дикие Земли, горные племена Хребта, потомки выживших в Бездне, дикие эльфы Гримнеста. Коллегия изучала ярость варваров и признала: это не магия. Варвары не подлежат регистрации.</p>
+  </div>
+
+  <!-- FOLLOWERS -->
+  <h2 class="section-title" id="followers">Последователи</h2>
+  <p><em>Классы: Жрец, Паладин, Друид</em></p>
+  <p>Их сила дарована богами — вне юрисдикции Коллегии Магии (так договорились при создании Коллегии: «Как Коллегия может регулировать волю Аэтериона?»). Свободны от регистрации и рангов, но не от последствий своих действий.</p>
+
+  <div class="note-block">
+    <div class="note-title">⚖ Божественная магия и закон</div>
+    <p>Жрец Аэтериона может творить заклинания 9-го круга без разрешения Коллегии. Но если он использует их во вред — его будет судить церковный трибунал или Инквизиция.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Жрецы</div>
+    <p>Статус зависит от одного вопроса: <em>какому богу вы служите?</em> Жрецы Высшего Пантеона — уважаемые члены общества, работающие в храмах и лечебницах. Жрецы Пантеона Хаоса — еретики в Солмарине. Культ Ксармы тайно существует. Последователи Сайларина — среди наёмников и солдат.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Паладины</div>
+    <p>Священные воины, связанные клятвой. Чаще встречаются в Инквизиции и храмовой страже. Также — в Верийском Ордене (клятва короны или преданности) или среди Последователей Хаоса (клятвопреступники).</p>
+    <div class="note-block" style="margin:0.8rem 0 0;">
+      <div class="note-title">Клятвопреступники</div>
+      <p>Потерявшие благословение богов. Некоторые находят новых покровителей — в Пантеоне Хаоса. Последователи Хаоса активно вербуют клятвопреступников.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Друиды</div>
+    <p>Почти не появляются в городах. Их дом — дикие места: Священный лес Сильвериона, Ардипов лес, отдалённые острова Гримнеста и Дикие Земли. Охраняют Священный лес от проникновения в Дикие Земли. Коллегия считает их безобидными отшельниками — это заблуждение: круг друидов опаснее отряда боевых магов.</p>
+  </div>
+
+  <!-- BOUND OTHERWISE -->
+  <h2 class="section-title" id="bound-otherwise">Связанные иначе</h2>
+  <p><em>Классы: Бард, Колдун</em></p>
+  <p>Не все источники магии укладываются в систему Коллегии. Барды черпают силу из слов и музыки, колдуны — из договоров с могущественными сущностями.</p>
+
+  <div class="card">
+    <div class="card-title">Барды</div>
+    <p>Напоминание о том, что магия когда-то была искусством. Коллегия официально считает их арканными заклинателями. На практике это почти невозможно контролировать — как отличить магическое выступление от обычного?</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Колдуны</div>
+    <p>Сила исходит от договора с архифеем, демоном, древним существом из Бездны или чем-то ещё. Многие находят приют среди Последователей Хаоса. Коллегия не регулирует колдунов официально — попытки контролировать их закончились гибелью трёх магистров.</p>
+  </div>
+
+  <!-- BETWEEN WORLDS -->
+  <h2 class="section-title" id="between-worlds">Между мирами</h2>
+  <p><em>Класс: Следопыт</em></p>
+  <p>Не маги-учёные, не слуги богов, не угасающие воины. Следопыты — мост между цивилизацией и дикими землями. Они знают, что лежит за границами карт. Гильдия Исследователей особенно ценит следопытов — их способность ориентироваться в Бездне бесценна. «Глубинники» знают повадки монстров и чувствуют, когда пора уходить.</p>
+</section>
+
+<!-- RACES -->
+<section class="section" id="races">
+  <div class="chapter-header">
+    <div class="chapter-number">ГЛАВА 5 · СОЗДАНИЕ ПЕРСОНАЖА</div>
+    <h1 class="chapter-title">Расы</h1>
+  </div>
+
+  <p>В Гартеневере не раса определяет судьбу, а магия. Или её отсутствие.</p>
+
+  <!-- HUMANS -->
+  <div class="faction-card" id="humans">
+    <div class="faction-name">👥 Люди</div>
+    <div class="faction-desc">Самая часто встречающаяся раса в мире. Создания Аэтериона — последние из гуманоидных статуй. Их «незавершённость» дала им свободу стать кем угодно.</div>
+    <div class="quote-block" style="margin:0.8rem 0;">
+      <div class="quote-text">Эльфы живут веками, дварфы помнят каждую обиду, а люди... люди просто делают. Пока остальные размышляют, человек уже построил город, разрушил его и построил новый.</div>
+      <div class="quote-attribution">Крилл Айканар, глава клана Айканар</div>
+    </div>
+    <p>Большинство населения Верийского Королевства и Солмаринского Государства. Составляют значительную часть Айканарии. Встречаются даже на Гримнесте.</p>
+    <div class="dm-block" style="margin:0.8rem 0 0;">
+      <div class="dm-title">💡 Для игрока</div>
+      <p>Человек в Гартеневере — чистый лист. Откуда вы родом: торговая Верия, религиозный Солмарин или магическая Айканария? Как ваша семья относится к магии? Кем были предки в Эпоху Меча?</p>
+    </div>
+  </div>
+
+  <!-- ELVES -->
+  <div class="faction-card" id="elves">
+    <div class="faction-name">🌿 Эльфы</div>
+    <div class="faction-desc">Первые после людей, кому Аэтерион даровал жизнь. Создатели магии как науки. Долгое время закрытые от мира, вышли лишь в конце Эпохи Хаоса.</div>
+    <div class="quote-block" style="margin:0.8rem 0;">
+      <div class="quote-text">Мы помним времена, когда магия была диким зверем, а не ручным псом. Мы помним имена те
